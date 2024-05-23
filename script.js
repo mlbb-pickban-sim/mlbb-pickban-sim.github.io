@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Claude', categories: ['marksman'], img: 'src/claude.webp', selected:false },
         { name: 'Vale', categories: ['mage'], img: 'src/vale.webp', selected:false },
         { name: 'Leomord', categories: ['fighter'], img: 'src/leomord.webp', selected:false },
-        { name: 'Lunox', categories: ['mage'], img: 'src/Lunox.webp', selected:false },
+        { name: 'Lunox', categories: ['mage'], img: 'src/lunox.webp', selected:false },
         { name: 'Hanzo', categories: ['assassin'], img: 'src/hanzo.webp', selected:false },
         { name: 'Belerick', categories: ['tank'], img: 'src/belerick.webp', selected:false },
         { name: 'Kimmy', categories: ['marksman','mage'], img: 'src/kimmy.webp', selected:false },
