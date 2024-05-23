@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Legends Pick-Ban Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="team" id="team1">
+            <h2>Team 1</h2>
+            <div class="picks">
+                <!-- Add slots for team 1 picks -->
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+            </div>
+        </div>
+        <div class="center">
+            <div class="banned">
+                <h2>Banned:</h2>
+                <div class="ban-slots">
+                    <!-- Create 10 ban slots -->
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="spacer"></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                    <div class="wrapper"><div class="ban-slot"></div></div>
+                </div>
+            </div>
+            <div class="hero-selection">
+                <h2>Select Hero</h2>
+                <div class="hero-categories">
+                    <!-- Hero categories (All, Mage, Tank, etc.) -->
+                    <button data-category="all">All</button>
+                    <button data-category="mage">Mage</button>
+                    <button data-category="tank">Tank</button>
+                    <button data-category="marksman">Marksman</button>
+                    <button data-category="assassin">Assassin</button>
+                    <button data-category="fighter">Fighter</button>
+                    <button data-category="support">Support</button>
+                </div>
+                <div class="hero-grid">
+                    <!-- Grid of hero images -->
+                </div>
+            </div>
+        </div>
+        <div class="team" id="team2">
+            <h2>Team 2</h2>
+            <div class="picks">
+                <!-- Add slots for team 2 picks -->
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+                <div class="wrapper"><div class="pick-slot"></div></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
