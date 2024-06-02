@@ -8,14 +8,14 @@ body {
 
 .outer-div {
     display: flex;
-    gap: 10px; /* Space between inner divs */
+    gap: 10px;
 }
 
 .inner-div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #333; /* Background color of the inner div */
+    background-color: #333;
     border-radius: 10px;
     padding: 10px;
 }
