@@ -1,5 +1,13 @@
-const heroes = [
-    { name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
+function convertToCSV(arr) {
+    const array = [Object.keys(arr[0])].concat(arr)
+    return array.map(row => {
+        return Object.values(row).map(value => {
+            return typeof value === 'string' ? JSON.stringify(value) : value
+        }).toString()
+    }).join('\n')
+  }
+  console.log(
+    convertToCSV([{ name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
     { name: 'Balmond', categories: ['fighter'], img: 'src/balmond.webp', bigimg: 'src/balmond2.webp', smlimg: 'src/balmond3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
     { name: 'Saber', categories: ['assassin'], img: 'src/saber.webp', bigimg: 'src/saber2.webp', smlimg: 'src/saber3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
     { name: 'Alice', categories: ['mage', 'tank'], img: 'src/alice.webp', bigimg: 'src/alice2.webp', smlimg: 'src/alice3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
@@ -124,4 +132,4 @@ const heroes = [
     { name: 'Cici', categories: ['fighter'], img: 'src/cici.webp', bigimg: 'src/cici2.webp', smlimg: 'src/cici3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Chip', categories: ['support', 'tank'], img: 'src/chip.webp', bigimg: 'src/chip2.webp', smlimg: 'src/chip3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Zhuxin', categories: ['mage'], img: 'src/zhuxin.webp', bigimg: 'src/zhuxin2.webp', smlimg: 'src/zhuxin3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 }
-];
+    ]));

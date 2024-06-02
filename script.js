@@ -170,8 +170,8 @@ const myChart = new Chart(ctx, {
         scales: {
             x: {
                 beginAtZero: true,
-                min: -7,
-                max: 7,
+                min: -10,
+                max: 10,
                 ticks: {
                     callback: function(value) {
                         return Math.abs(value);
@@ -227,7 +227,7 @@ const myRadarChart2 = new Chart(ctx2, {
         scales: {
             r: {
                 min: 0,
-                max: 5,
+                max: 10,
                 ticks: {
                     beginAtZero: true,
                     stepSize: 1,
@@ -273,7 +273,7 @@ const myRadarChart1 = new Chart(ctx3, {
         scales: {
             r: {
                 min: 0,
-                max: 5,
+                max: 10,
                 ticks: {
                     beginAtZero: true,
                     stepSize: 1,
@@ -337,7 +337,7 @@ banSlots.forEach(slot => {
     slot.addEventListener('click', () => {
         if (selectedHero) {
             slot.innerHTML = `
-                <img src="${selectedHero.smlimg}" alt="${selectedHero.name}">
+                <img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
                 <div class="ban-indicator"></div>
                 <span class="remove-sml">✕</span>
             `;
@@ -357,7 +357,7 @@ pickSlots1.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
             slot.innerHTML = `
-                <img src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                 <span class="remove">✕</span>
             `;
             slot.dataset.hero = selectedHero.name;
@@ -384,7 +384,7 @@ pickSlots2.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
             slot.innerHTML = `
-                <img src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                 <span class="remove">✕</span>
             `;
             slot.dataset.hero = selectedHero.name;
