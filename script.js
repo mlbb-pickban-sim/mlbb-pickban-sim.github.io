@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+window.scrollTo(1, 0);
+
 const ctx = document.getElementById('myChart').getContext('2d');
 
 const heroes = [
@@ -679,52 +682,69 @@ const carousel = document.querySelector('.carousel');
 const items = document.querySelectorAll('.carousel-item');
 const totalItems = items.length;
 
-let startX, endX;
+let startX, currentX, deltaX;
+let isDragging = false;
 
 carousel.addEventListener('touchstart', handleTouchStart, false);
-carousel.addEventListener('touchend', handleTouchEnd, false);
+    carousel.addEventListener('touchmove', handleTouchMove, {passive:false});
+    carousel.addEventListener('touchend', handleTouchEnd, false);
 
-function handleTouchStart(event) {
-    startX = event.touches[0].clientX;
-}
-
-function handleTouchEnd(event) {
-    endX = event.changedTouches[0].clientX;
-    handleSwipe();
-}
-
-function handleSwipe() {
-    if (startX - endX > 50) {
-        nextItem();
+    function handleTouchStart(event) {
+        startX = event.touches[0].clientX;
+        isDragging = true;
+        items.forEach(item => {
+            item.style.transition = 'none';
+        });
     }
-    if (endX - startX > 50) {
-        prevItem();
+
+    function handleTouchMove(event) {
+        if (!isDragging) return;
+        event.preventDefault();
+        currentX = event.touches[0].clientX;
+        deltaX = currentX - startX;
+        const offset = -currentIndex * 100 + (deltaX / carousel.offsetWidth) * 100;
+        items.forEach(item => {
+            item.style.transform = `translateX(${offset}%)`;
+        });
     }
-}
 
-function nextItem() {
-    if (currentIndex < totalItems - 1) {
-        currentIndex++;
-    } else {
-        currentIndex = 0;
+    function handleTouchEnd(event) {
+        isDragging = false;
+        items.forEach(item => {
+            item.style.transition = 'transform 0.3s ease';
+        });
+        const endX = event.changedTouches[0].clientX;
+        handleSwipe(endX);
     }
-    updateCarousel();
-}
 
-function prevItem() {
-    if (currentIndex > 0) {
-        currentIndex--;
-    } else {
-        currentIndex = totalItems - 1;
+    function handleSwipe(endX) {
+        if (startX - endX > 50) {
+            nextItem();
+        } else if (endX - startX > 50) {
+            prevItem();
+        } else {
+            updateCarousel();
+        }
     }
-    updateCarousel();
-}
 
-function updateCarousel() {
-    const offset = -currentIndex * 100;
-    items.forEach(item => {
-        item.style.transform = `translateX(${offset}%)`;
-    });
-}
+    function nextItem() {
+        if (currentIndex < totalItems - 1) {
+            currentIndex++;
+        }
+        updateCarousel();
+    }
 
+    function prevItem() {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } 
+        updateCarousel();
+    }
+
+    function updateCarousel() {
+        const offset = -currentIndex * 100;
+        items.forEach(item => {
+            item.style.transform = `translateX(${offset}%)`;
+        });
+    }
 });
