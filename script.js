@@ -224,6 +224,10 @@ const myRadarChart2 = new Chart(ctx2, {
         }]
     },
     options: {
+        responsive: true,
+        animation: {
+            duration: 500
+        },
         scales: {
             r: {
                 min: 0,
