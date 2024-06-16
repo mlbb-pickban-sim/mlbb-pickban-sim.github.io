@@ -100,12 +100,14 @@ body {
 .top-row{
     display:flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .bottom-row{
     align-items: center;
     flex-direction: row;
     display: flex;
+    width: 100%;
 }
 
 
