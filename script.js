@@ -150,6 +150,68 @@ searchInput2.addEventListener('input', (event) => {
     trueFilter(query, globalCat);
 });
 
+const ctx10 = document.getElementById('mobileBar').getContext('2d');
+const mobileBar = new Chart(ctx10, {
+    type: 'bar',
+    data: {
+        labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
+        datasets: [
+            {
+                label: 'Team A',
+                data:  [0,0,0,0,0,0,0], // Negative values
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Team B',
+                data:  [0,0,0,0,0,0,0], // Positive values
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        scales: {
+            x: {
+                beginAtZero: true,
+                min: -10,
+                max: 10,
+                ticks: {
+                    callback: function(value) {
+                        return Math.abs(value);
+                    }
+                }
+            },
+            y: {
+                stacked: true
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += Math.abs(context.raw);
+                        return label;
+                    }
+                }
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        categoryPercentage: 1.0,
+        barPercentage: 1.0
+    },
+});
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -502,6 +564,7 @@ pickSlots1.forEach(slot => {
                 enableHeroInGrid(slot.dataset.hero);
                 updateRadar(myRadarChart1, slot.dataset.hero, true);
                 updateBar(myChart, slot.dataset.hero, 0, true);
+                updateBar(mobileBar, slot.dataset.hero, 0, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                 slot.innerHTML = '';
                 slot.removeAttribute('data-hero');
@@ -510,6 +573,7 @@ pickSlots1.forEach(slot => {
             disableHeroInGrid(selectedHero);
             updateRadar(myRadarChart1, slot.dataset.hero, false);
             updateBar(myChart, slot.dataset.hero, 0, false);
+            updateBar(mobileBar, slot.dataset.hero, 0, false);
             updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
             slot.removeEventListener('click', slotClickListener); 
         }
@@ -531,6 +595,7 @@ pickSlots2.forEach(slot => {
                 enableHeroInGrid(slot.dataset.hero);
                 updateRadar(myRadarChart2, slot.dataset.hero, true);
                 updateBar(myChart, slot.dataset.hero, 1, true);
+                updateBar(mobileBar, slot.dataset.hero, 1, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                 slot.innerHTML = '';
                 slot.removeAttribute('data-hero');
@@ -539,6 +604,7 @@ pickSlots2.forEach(slot => {
             disableHeroInGrid(selectedHero);
             updateRadar(myRadarChart2, slot.dataset.hero, false);
             updateBar(myChart, slot.dataset.hero, 1, false);
+            updateBar(mobileBar, slot.dataset.hero, 1, false);
             updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
             slot.removeEventListener('click', slotClickListener); // Remove the click listener
         }
@@ -589,7 +655,6 @@ function updateBar(chart, heroName, team, mode){
         chart.data.datasets[0].data = temp;
     }
     chart.update();
-
 }
 
 function updateRadar(chart, heroName, mode){
