@@ -129,19 +129,25 @@ const heroes = [
     { name: 'Zhuxin', categories: ['mage'], img: 'src/zhuxin.webp', bigimg: 'src/zhuxin2.webp', smlimg: 'src/zhuxin3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 }
 ];
 
-const heroGrid = document.querySelector('.hero-grid')
+const heroGrid = document.querySelector('.hero-grid');
+const heroGrid2 = document.querySelector('.hero-grid2');
 const categories = document.querySelectorAll('.hero-categories button');
 const banSlots = document.querySelectorAll('.small-div');
 const pickSlots1 = document.querySelectorAll('.large-div2');
 const pickSlots2 = document.querySelectorAll('.large-div');
 let selectedHero = null;
-let globalCat = 'all';
 
 const searchInput = document.getElementById('search');
+const searchInput2 = document.getElementById('search2');
 
 searchInput.addEventListener('input', (event) => {
     const query = event.target.value.toLowerCase();
     filterHeroes(query);
+});
+
+searchInput2.addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    trueFilter(query, globalCat);
 });
 
 const myChart = new Chart(ctx, {
@@ -303,10 +309,20 @@ const loadHeroes = (category) => {
     displayHeroes(heroesToDisplay);
 };
 
+const loadHeroes2 = (category) => {
+    const heroesToDisplay = heroes.filter(hero => hero.categories.includes(category));
+    displayHeroes2(heroesToDisplay);
+};
+
 const filterHeroes = (query) => {
     const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query));
     displayHeroes(filteredHeroes);
 };
+
+const trueFilter = (query, category) => {
+    const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query) && hero.categories.includes(category));
+    displayHeroes2(filteredHeroes);
+}
 
 const displayHeroes = (heroesToDisplay) => {
     heroGrid.innerHTML = '';
@@ -328,11 +344,39 @@ const displayHeroes = (heroesToDisplay) => {
     });
 };
 
-loadHeroes('all');
+const displayHeroes2 = (heroesToDisplay) => {
+    heroGrid2.innerHTML = '';
+    heroesToDisplay.forEach(hero => {
+        const heroDiv = document.createElement('div');
+        heroDiv.classList.add('hero');
+        heroDiv.dataset.hero = hero.name;
+        heroDiv.dataset.categories = hero.categories.join(',');
+
+        if (hero.selected === true) {
+            heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
+        } else {
+            heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
+            heroDiv.addEventListener('click', () => {
+                selectedHero = hero;
+            });
+        }
+        heroGrid2.appendChild(heroDiv);
+    });
+};
+
+if(screen.width<700){
+    loadHeroes2('mage');
+    globalCat = 'mage';
+}
+else{
+    loadHeroes('all');
+    globalCat = 'all';
+}
 
 categories.forEach(button => {
     button.addEventListener('click', () => {
         loadHeroes(button.dataset.category);
+        loadHeroes2(button.dataset.category);
         globalCat = button.dataset.category;
     });
 });
@@ -416,21 +460,19 @@ const disableHeroInGrid = (heroName) => {
     heroName.selected = true;
     selectedHero=null;
     loadHeroes(globalCat);
+    loadHeroes2(globalCat);
 };
 
 const enableHeroInGrid = (heroName) => {
     const foundHero = heroes.find(hero => hero.name === heroName);
     foundHero.selected = false;
     loadHeroes(globalCat);
+    loadHeroes2(globalCat);
 };
 
 function updateBar(chart, heroName, team, mode){
     const foundHero = heroes.find(hero => hero.name === heroName);
     const extractedProperties = [foundHero.wave,foundHero.dps,foundHero.vision,foundHero.cc,foundHero.obj,foundHero.push, foundHero.supp];
-
-    console.log(extractedProperties);
-
-
 
     if(team == 1){
         temp = chart.data.datasets[1].data;
@@ -474,4 +516,58 @@ function updateRadar(chart, heroName, mode){
     chart.data.datasets[0].data = temp;
     chart.update();
 }
+
+let currentIndex = 0;
+const carousel = document.querySelector('.carousel');
+const items = document.querySelectorAll('.carousel-item');
+const totalItems = items.length;
+
+let startX, endX;
+
+carousel.addEventListener('touchstart', handleTouchStart, false);
+carousel.addEventListener('touchend', handleTouchEnd, false);
+
+function handleTouchStart(event) {
+    startX = event.touches[0].clientX;
+}
+
+function handleTouchEnd(event) {
+    endX = event.changedTouches[0].clientX;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    if (startX - endX > 50) {
+        nextItem();
+    }
+    if (endX - startX > 50) {
+        prevItem();
+    }
+}
+
+function nextItem() {
+    if (currentIndex < totalItems - 1) {
+        currentIndex++;
+    } else {
+        currentIndex = 0;
+    }
+    updateCarousel();
+}
+
+function prevItem() {
+    if (currentIndex > 0) {
+        currentIndex--;
+    } else {
+        currentIndex = totalItems - 1;
+    }
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const offset = -currentIndex * 100;
+    items.forEach(item => {
+        item.style.transform = `translateX(${offset}%)`;
+    });
+}
+
 });

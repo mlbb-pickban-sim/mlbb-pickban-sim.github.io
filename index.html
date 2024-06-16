@@ -2,90 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Mobile Legends Pick-Ban Tool</title>
 </head>
 <body>
-    <div>
-        <div class = "top-row">
-            <div class="outer-div">
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div2"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+    <div id="content">
+        <div class="desktop">
+            <div class = "top-row">
+                <div class="outer-div">
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div2"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div2"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div2"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div2"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div2"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
                 </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div2"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+                <div class = "chart-container">
+                    <canvas id="myChart" width="500" height="250"></canvas>
                 </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div2"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
-                </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div2"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
-                </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div2"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+                <div class="outer-div">
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
+                    <div class="inner-div">
+                        <div class="wrapper"><div class="large-div"></div></div>
+                        <div class="wrapper"><div class="small-div"></div></div>
+                    </div>
                 </div>
             </div>
-            <div class = "chart-container">
-                <canvas id="myChart" width="500" height="250"></canvas>
-            </div>
-            <div class="outer-div">
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+            <div class = "bottom-row">
+                <div>
+                    <canvas id="myRadarChart1"  width="400" height="300"></canvas>
                 </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+                <div>
+
                 </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+                <div class="notepad-container">
+                    <div class="notepad-title">General Game Notes</div>
+                    <div class="notepad" contenteditable="true"></div>
                 </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+                <div class = "hero-selection">
+                    <div class="hero-categories">
+                        <input type="search" id="search" name="search" placeholder="Search...">
+                        <button data-category="all">All</button>
+                        <button data-category="mage">Mage</button>
+                        <button data-category="tank">Tank</button>
+                        <button data-category="marksman">Marksman</button>
+                        <button data-category="assassin">Assassin</button>
+                        <button data-category="fighter">Fighter</button>
+                        <button data-category="support">Support</button>
+                    </div>
+                    <div class="hero-grid">
+                        
+                    </div>
                 </div>
-                <div class="inner-div">
-                    <div class="wrapper"><div class="large-div"></div></div>
-                    <div class="wrapper"><div class="small-div"></div></div>
+                <div>
+                    <canvas id="myRadarChart2"  width="400" height="300"></canvas>
                 </div>
             </div>
         </div>
-        <div class = "bottom-row">
-            <div>
-                <canvas id="myRadarChart1"  width="400" height="300"></canvas>
-            </div>
-            <div>
-
-            </div>
-            <div class="notepad-container">
-                <div class="notepad-title">General Game Notes</div>
-                <div class="notepad" contenteditable="true"></div>
-            </div>
-            <div class = "hero-selection">
-                <div class="hero-categories">
-                    <input type="search" id="search" name="search" placeholder="Search...">
-                    <button data-category="all">All</button>
-                    <button data-category="mage">Mage</button>
-                    <button data-category="tank">Tank</button>
-                    <button data-category="marksman">Marksman</button>
-                    <button data-category="assassin">Assassin</button>
-                    <button data-category="fighter">Fighter</button>
-                    <button data-category="support">Support</button>
+        <div class="mobile">
+            <div class="team-div">
+                <div class="pick-div">
+                    <div class="wrapper"><div class="large-div2"></div></div>
+                    <div class="wrapper"><div class="large-div2"></div></div>
+                    <div class="wrapper"><div class="large-div2"></div></div>
+                    <div class="wrapper"><div class="large-div2"></div></div>
+                    <div class="wrapper"><div class="large-div2"></div></div>
                 </div>
-                <div class="hero-grid">
-                    
+                <div class="ban-div">
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
                 </div>
             </div>
-            <div>
-                <canvas id="myRadarChart2"  width="400" height="300"></canvas>
+            <div class="carousel">
+                <div class="carousel-item">
+                    <div class = "hero-selection">
+                        <div class="hero-categories">
+                            <input type="search" id="search2" name="search2" placeholder="SEARCH...">
+                            <button data-category="mage" class="role-button mage"></button>
+                            <button data-category="tank" class="role-button tank"></button>
+                            <button data-category="marksman" class="role-button marksman"></button>
+                            <button data-category="assassin" class="role-button assassin"></button>
+                            <button data-category="fighter" class="role-button fighter"></button>
+                            <button data-category="support" class="role-button support"></button>
+                        </div>
+                        <div class="hero-grid2">
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">Item 2</div>
+                <div class="carousel-item">Item 3</div>
+            </div>
+            <div class="team-div">
+                <div class="ban-div2">
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                    <div class="wrapper"><div class="small-div"></div></div>
+                </div>
+                <div class="pick-div2">
+                    <div class="wrapper"><div class="large-div"></div></div>
+                    <div class="wrapper"><div class="large-div"></div></div>
+                    <div class="wrapper"><div class="large-div"></div></div>
+                    <div class="wrapper"><div class="large-div"></div></div>
+                    <div class="wrapper"><div class="large-div"></div></div>
+                </div>
             </div>
         </div>
     </div>

@@ -6,6 +6,10 @@ body {
     margin: 0;
 }
 
+.mobile{
+    display: none;
+}
+
 .outer-div {
     display: flex;
     gap: 0.625rem;
@@ -278,4 +282,239 @@ body {
 
 .notepad:focus {
     outline: none; /* Remove focus outline */
+}
+
+@media only screen and (max-device-width: 700px) {
+    * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+    .mobile{
+        display:flex;
+        flex-direction: column;
+    }
+    .desktop{
+        display:none;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        background-color: #2d2d2d;
+    }
+    
+    .carousel {
+        display: flex;
+        overflow: hidden;
+        width: 100vw;
+        height: 40vh;
+        background-color: #333; /* Ensures the background color is consistent */
+    }
+    
+    .carousel-item {
+        min-width: 100%;
+        transition: transform 0.5s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-selection {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .hero-categories {
+        margin-top: 1vh;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .hero-categories button {
+        background-color: transparent;
+        margin: 0.1vw;
+    }
+
+    .hero-categories input {
+        background-color: #2d2d2d;
+        border: none;
+        border-radius: 0;
+        width: 30vw;
+        height: 10vw;
+        color: #7a7a7a;
+    }
+    
+    .hero-categories input:focus{
+        outline: none;
+    }
+
+    .role-button {
+        width: 10vw;
+        height: 10vw;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+        cursor: pointer;
+    }
+
+    .role-button.mage {
+        background-image: url('src/mage.webp');
+    }
+    
+    .role-button.tank {
+        background-image: url('src/tank.webp');
+    }
+    
+    .role-button.marksman {
+        background-image: url('src/marksman.webp');
+    }
+    
+    .role-button.assassin {
+        background-image: url('src/assassin.webp');
+    }
+    
+    .role-button.fighter {
+        background-image: url('src/fighter.webp');
+    }
+    
+    .role-button.support {
+        background-image: url('src/support.webp');
+    }
+
+    .hero-grid2 {
+        padding:0;
+        margin-top: 1vh;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-auto-rows: min-content;
+        gap: 1vw;
+        width: 95vw;
+    }
+
+    .hero {
+        width: 11vw;
+        height: 11vw;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .team-div{
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        padding: 0;
+        height: 30vh;
+        width: 90vw;
+    }
+    .pick-div {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 70%;
+    }
+    .pick-div2 {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 70%;
+    }
+    .large-div2{
+        width: 16vw;
+        height: 16vh;
+        align-self: center;
+        background: linear-gradient(to bottom, #333 95%, #36A2EB 5%);
+        border-radius: 2px;
+    }
+    .large-div2 img{
+        width:100%;
+        height:100%;
+        object-fit: cover;
+        overflow: hidden;
+        border-radius: 2px;
+        position: relative;
+    }
+    .remove {
+        font-size: x-small;
+        position: fixed;
+        top: -0.188rem; 
+        right: -0.188rem; 
+        background-color: #FF7F7F;
+        color: white;
+        border-radius: 1px;
+        width: 0.938rem;
+        height: 0.938rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    .large-div{
+        width: 16vw;
+        height: 16vh;
+        align-self: center;
+        background: linear-gradient(to bottom, #333 95%, #FF6384 5%);
+        border-radius: 2px;
+    }
+    .large-div img{
+        width:100%;
+        height:100%;
+        object-fit: cover;
+        overflow: hidden;
+        border-radius: 2px;
+        position: relative;
+    }
+    .ban-div{
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+        height: 20%;
+    }
+    .ban-div2{
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
+        width: 70%;
+        height: 30%;
+    }
+    .small-div{
+        width: 10vw;
+        height: 10vw;
+        background: #333;
+        align-self: center;
+        border-radius: 2px;
+    }
+    .remove-sml {
+        font-size: 0.2em;
+        position: fixed;
+        top: 0.5rem; 
+        right: -0.188rem; 
+        background-color: #FF7F7F;
+        color: white;
+        border-radius: 20%;
+        width: 0.625rem;
+        height: 0.625rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    .wrapper{
+        transform: scale(1);
+        align-self: center;
+    }
 }
