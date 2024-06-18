@@ -517,11 +517,12 @@ const displayHeroes2 = (heroesToDisplay) => {
                 selectedHero = hero;
                 if(inDraft){
                     if (currentHeroIndex >= heroOrder.length){ 
+                        hideTimer();
                         inDraft = false;
                         return;
                     }
                     let targetDiv;
-        
+                    startTimer();
                     if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
                         targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
@@ -805,6 +806,8 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
     }
 
     function disableDraftMode() {
+        
+        hideTimer();
         pickSlots2 = document.querySelectorAll('.large-div');
         pickSlots1 = document.querySelectorAll('.large-div2');
         banSlots = document.querySelectorAll('.small-div');
@@ -987,6 +990,7 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
         playButton.addEventListener('click', draftModeDisableClick);
 
         showNotification('Draft Mode Enabled');
+        showTimer();
     }
 
     function showNotification(message) {
@@ -996,18 +1000,53 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
     
         document.body.appendChild(notification);
     
-        // Slide in the notification
         setTimeout(() => {
             notification.classList.add('show');
-        }, 100); // Timeout to allow the element to be appended before the animation
-    
-        // Slide out the notification after 2 seconds
+        }, 100);
+   
         setTimeout(() => {
             notification.classList.remove('show');
-            // Remove the notification from the DOM after the slide out animation
             setTimeout(() => {
                 notification.remove();
-            }, 500); // Match this duration with the CSS transition duration
-        }, 2500); // 2 seconds + 0.5 second animation time
+            }, 500); 
+        }, 2500);
+    }
+
+    const countdownBar = document.getElementById('countdown-bar');
+    const timerContainer = document.getElementById('timer-container');
+    let totalTime = 30; 
+    let currentTime = totalTime;
+    const updateInterval = 10; 
+    const initialWidth = 100; 
+    let timerInterval;
+
+    function updateCountdown() {
+        if (currentTime <= 0) {
+            clearInterval(timerInterval);
+            currentTime = 0;
+            countdownBar.style.width = '0%'; 
+            return;
+        }
+
+        currentTime -= updateInterval / 1000; 
+        let widthPercentage = (currentTime / totalTime) * initialWidth;
+        countdownBar.style.width = widthPercentage + '%';
+    }
+
+    function startTimer() {
+        currentTime = totalTime;
+        countdownBar.style.width = initialWidth + '%'; 
+        clearInterval(timerInterval); 
+        timerInterval = setInterval(updateCountdown, updateInterval); 
+    }
+
+    function showTimer() {
+        timerContainer.style.visibility = 'visible'; 
+        startTimer(); 
+    }
+
+    function hideTimer(){
+        timerContainer.style.visibility = 'hidden'; 
+        clearInterval(timerInterval);
     }
 });
