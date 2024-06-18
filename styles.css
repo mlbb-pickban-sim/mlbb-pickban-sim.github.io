@@ -72,7 +72,7 @@ body {
     height:100%;
     object-fit: fill;
     overflow: hidden;
-    opacity: 75%;
+    opacity: 40%;
     border-radius: 0.125rem;
 }
 
@@ -321,7 +321,6 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        align-self: start;
     }
     .hero-selection {
         width: 100vw;
