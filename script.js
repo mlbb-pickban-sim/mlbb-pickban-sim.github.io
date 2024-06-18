@@ -132,12 +132,16 @@ const heroes = [
     { name: 'Zhuxin', categories: ['mage'], img: 'src/zhuxin.webp', bigimg: 'src/zhuxin2.webp', smlimg: 'src/zhuxin3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 }
 ];
 
+const heroOrder = [
+    10, 15, 11, 16, 12, 17, 5, 5, 6, 6, 7, 7, 18, 13, 19, 14, 8, 8, 9, 9
+];
+
 const heroGrid = document.querySelector('.hero-grid');
 const heroGrid2 = document.querySelector('.hero-grid2');
 const categories = document.querySelectorAll('.hero-categories button');
-const banSlots = document.querySelectorAll('.small-div');
-const pickSlots1 = document.querySelectorAll('.large-div2');
-const pickSlots2 = document.querySelectorAll('.large-div');
+let banSlots = document.querySelectorAll('.small-div');
+let pickSlots1 = document.querySelectorAll('.large-div2');
+let pickSlots2 = document.querySelectorAll('.large-div');
 let selectedHero = null;
 
 const searchInput = document.getElementById('search');
@@ -511,6 +515,37 @@ const displayHeroes2 = (heroesToDisplay) => {
             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
             heroDiv.addEventListener('click', () => {
                 selectedHero = hero;
+                if(inDraft){
+                    if (currentHeroIndex >= heroOrder.length){ 
+                        inDraft = false;
+                        return;
+                    }
+                    let targetDiv;
+        
+                    if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
+                        targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
+                                                <div class="ban-indicator"></div>`;
+                    } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
+                        updateRadar(myRadarChart1, selectedHero.name, false);
+                        updateBar(myChart, selectedHero.name, 0, false);
+                        updateBar(mobileBar, selectedHero.name, 0, false);
+                        updateMobileRadar(mobileChart, selectedHero.name, 0, false);
+                    } else {
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
+                        updateRadar(myRadarChart2, selectedHero.name, false);
+                        updateBar(myChart, selectedHero.name, 1, false);
+                        updateBar(mobileBar, selectedHero.name, 1, false);
+                        updateMobileRadar(mobileChart, selectedHero.name, 1, false);
+                    }
+
+                    targetDiv.dataset.hero = selectedHero.name;
+                
+                disableHeroInGrid(selectedHero);
+                currentHeroIndex++;}
             });
         }
         heroGrid2.appendChild(heroDiv);
@@ -535,7 +570,7 @@ categories.forEach(button => {
 });
 
 banSlots.forEach(slot => {
-    slot.addEventListener('click', () => {
+    const banSlotClickListener = () => {
         if (selectedHero) {
             slot.innerHTML = `
                 <img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
@@ -548,10 +583,13 @@ banSlots.forEach(slot => {
                 enableHeroInGrid(slot.dataset.hero);
                 slot.innerHTML = '';
                 slot.removeAttribute('data-hero');
+                slot.addEventListener('click', banSlotClickListener); 
             });
             disableHeroInGrid(selectedHero);
+            slot.removeEventListener('click', banSlotClickListener); 
         }
-    });
+    }
+    slot.addEventListener('click', banSlotClickListener);
 });
 
 pickSlots1.forEach(slot => {
@@ -746,5 +784,206 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
         items.forEach(item => {
             item.style.transform = `translateX(${offset}%)`;
         });
+    }
+    let inDraft = false;
+    let currentHeroIndex = 0;
+    const playButton = document.getElementById('playButton');
+    const icon = document.getElementById('icon');
+
+    const draftModeEnableClick = () => {
+        icon.classList.remove('play-icon');
+        icon.classList.add('pause-icon');
+        enableDraftMode();
+    }
+
+    playButton.addEventListener('click', draftModeEnableClick);
+
+    const draftModeDisableClick = () => {
+        icon.classList.add('play-icon');
+        icon.classList.remove('pause-icon');
+        disableDraftMode();
+    }
+
+    function disableDraftMode() {
+        pickSlots2 = document.querySelectorAll('.large-div');
+        pickSlots1 = document.querySelectorAll('.large-div2');
+        banSlots = document.querySelectorAll('.small-div');
+
+        playButton.addEventListener('click', draftModeEnableClick);
+        playButton.removeEventListener('click', draftModeDisableClick);
+        inDraft = false;
+
+        pickSlots2.forEach(slot => {
+            const slotClickListener = () => {
+                if (selectedHero) {
+                    slot.innerHTML = `
+                        <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                        <span class="remove">✕</span>
+                    `;
+                    slot.dataset.hero = selectedHero.name;
+                    slot.querySelector('.remove').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        enableHeroInGrid(slot.dataset.hero);
+                        updateRadar(myRadarChart2, slot.dataset.hero, true);
+                        updateBar(myChart, slot.dataset.hero, 1, true);
+                        updateBar(mobileBar, slot.dataset.hero, 1, true);
+                        updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
+                        slot.innerHTML = '';
+                        slot.removeAttribute('data-hero');
+                        slot.addEventListener('click', slotClickListener); 
+                    });
+                    disableHeroInGrid(selectedHero);
+                    updateRadar(myRadarChart2, slot.dataset.hero, false);
+                    updateBar(myChart, slot.dataset.hero, 1, false);
+                    updateBar(mobileBar, slot.dataset.hero, 1, false);
+                    updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
+                    slot.removeEventListener('click', slotClickListener); 
+                }
+            };
+            
+            if (slot.dataset.hero != null) {
+                const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
+                slot.innerHTML = ``;
+                slot.innerHTML = `
+                    <img title="${foundHero.name}" src="${foundHero.bigimg}" alt="${foundHero.name}">
+                    <span class="remove">✕</span>
+                `;
+                slot.querySelector('.remove').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    enableHeroInGrid(slot.dataset.hero);
+                    updateRadar(myRadarChart2, slot.dataset.hero, true);
+                    updateBar(myChart, slot.dataset.hero, 1, true);
+                    updateBar(mobileBar, slot.dataset.hero, 1, true);
+                    updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
+                    slot.innerHTML = '';
+                    slot.removeAttribute('data-hero');
+                    slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+                });
+            }
+            else {
+                slot.addEventListener('click', slotClickListener); 
+            }
+        });
+
+        pickSlots1.forEach(slot => {
+            const slotClickListener = () => {
+                if (selectedHero) {
+                    slot.innerHTML = `
+                        <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                        <span class="remove">✕</span>
+                    `;
+                    slot.dataset.hero = selectedHero.name;
+                    slot.querySelector('.remove').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        enableHeroInGrid(slot.dataset.hero);
+                        updateRadar(myRadarChart2, slot.dataset.hero, true);
+                        updateBar(myChart, slot.dataset.hero, 0, true);
+                        updateBar(mobileBar, slot.dataset.hero, 0, true);
+                        updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
+                        slot.innerHTML = '';
+                        slot.removeAttribute('data-hero');
+                        slot.addEventListener('click', slotClickListener); 
+                    });
+                    disableHeroInGrid(selectedHero);
+                    updateRadar(myRadarChart2, slot.dataset.hero, false);
+                    updateBar(myChart, slot.dataset.hero, 0, false);
+                    updateBar(mobileBar, slot.dataset.hero, 0, false);
+                    updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
+                    slot.removeEventListener('click', slotClickListener); 
+                }
+            };
+            
+            if (slot.dataset.hero != null) {
+                const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
+                slot.innerHTML = ``;
+                slot.innerHTML = `
+                    <img title="${foundHero.name}" src="${foundHero.bigimg}" alt="${foundHero.name}">
+                    <span class="remove">✕</span>
+                `;
+                slot.querySelector('.remove').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    enableHeroInGrid(slot.dataset.hero);
+                    updateRadar(myRadarChart2, slot.dataset.hero, true);
+                    updateBar(myChart, slot.dataset.hero, 0, true);
+                    updateBar(mobileBar, slot.dataset.hero, 0, true);
+                    updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
+                    slot.innerHTML = '';
+                    slot.removeAttribute('data-hero');
+                    slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+                });
+            }
+            else {
+                slot.addEventListener('click', slotClickListener); 
+            }
+        });
+
+        banSlots.forEach(slot => {
+            const banSlotClickListener = () => {
+                if (selectedHero) {
+                    slot.innerHTML = `
+                        <img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
+                        <div class="ban-indicator"></div>
+                        <span class="remove-sml">✕</span>
+                    `;
+                    slot.dataset.hero = selectedHero.name;
+                    slot.querySelector('.remove-sml').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        enableHeroInGrid(slot.dataset.hero);
+                        slot.innerHTML = '';
+                        slot.removeAttribute('data-hero');
+                        slot.addEventListener('click', banSlotClickListener); 
+                    });
+                    disableHeroInGrid(selectedHero);
+                    slot.removeEventListener('click', banSlotClickListener); 
+                }
+            };
+
+            if (slot.dataset.hero != null) {
+                const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
+                slot.innerHTML = ``;
+                slot.innerHTML = `
+                    <img title="${foundHero.name}" src="${foundHero.smlimg}" alt="${foundHero.name}">
+                    <div class="ban-indicator"></div>
+                    <span class="remove-sml">✕</span>
+                `;
+                slot.querySelector('.remove-sml').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    enableHeroInGrid(slot.dataset.hero);
+                    slot.innerHTML = '';
+                    slot.removeAttribute('data-hero');
+                    slot.addEventListener('click', banSlotClickListener); 
+                });
+            }
+            else {
+                slot.addEventListener('click', banSlotClickListener); 
+            }
+        });
+    }
+
+    function enableDraftMode() {
+        currentHeroIndex = 0;
+        const largeDivs = document.querySelectorAll('.large-div');
+        const largeDiv2s = document.querySelectorAll('.large-div2');
+        const smallDivs = document.querySelectorAll('.small-div');
+
+        // Clear innerHTML
+        largeDivs.forEach(div => div.innerHTML = '');
+        largeDiv2s.forEach(div => div.innerHTML = '');
+        smallDivs.forEach(div => div.innerHTML = '');
+
+        // Remove click event listeners
+        banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
+        pickSlots1.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
+        pickSlots2.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
+
+        heroes.forEach(hero => {
+            hero.selected = false;
+        });
+
+        loadHeroes2(globalCat);
+
+        inDraft = true;
+        playButton.removeEventListener('click', draftModeEnableClick);
+        playButton.addEventListener('click', draftModeDisableClick);
     }
 });

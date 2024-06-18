@@ -346,7 +346,8 @@ body {
         background-color: #2d2d2d;
         border: none;
         border-radius: 0;
-        width: 30vw;
+        font-size: 2vw;
+        width: 20vw;
         height: 10vw;
         color: #7a7a7a;
     }
@@ -389,10 +390,47 @@ body {
         background-image: url('src/support.webp');
     }
 
+    .play-button {
+        width: 10vw;
+        height: 10vw;
+        background-color: #2d2d2d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 2px;
+        margin-right: 1vw;
+    }
+    
+    .play-icon {
+        width: 0;
+        height: 0;
+        border-left: 3vw solid #7a7a7a;
+        border-top: 2vw solid transparent;
+        border-bottom: 2vw solid transparent;
+        align-self: center;
+    }
+
+    .pause-icon {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 3vw; /* Adjust width to fit the pause icon */
+        height: 3vw; /* Adjust height to fit the pause icon */
+    }
+    
+    .pause-icon::before, .pause-icon::after {
+        content: '';
+        display: block;
+        width: 1vw; /* Adjust width of each pause bar */
+        height: 100%;
+        background-color: #7a7a7a;
+    }
+
     .hero-grid2 {
         padding:0;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(60px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(60px,1fr));
         grid-auto-rows: min-content;
         align-items: center;
         gap: 1vw;
@@ -534,7 +572,7 @@ body {
     .hero-grid2 {
         padding:0;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(45px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(45px,1fr));
         grid-auto-rows: min-content;
         align-items: center;
         gap: 1vw;
@@ -555,7 +593,7 @@ body {
     .hero-grid2 {
         padding:0;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(40px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(40px,1fr));
         grid-auto-rows: min-content;
         align-items: center;
         gap: 1vw;
