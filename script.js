@@ -985,5 +985,29 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
         inDraft = true;
         playButton.removeEventListener('click', draftModeEnableClick);
         playButton.addEventListener('click', draftModeDisableClick);
+
+        showNotification('Draft Mode Enabled');
+    }
+
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.innerText = message;
+    
+        document.body.appendChild(notification);
+    
+        // Slide in the notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100); // Timeout to allow the element to be appended before the animation
+    
+        // Slide out the notification after 2 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            // Remove the notification from the DOM after the slide out animation
+            setTimeout(() => {
+                notification.remove();
+            }, 500); // Match this duration with the CSS transition duration
+        }, 2500); // 2 seconds + 0.5 second animation time
     }
 });
