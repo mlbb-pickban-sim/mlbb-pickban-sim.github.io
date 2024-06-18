@@ -517,7 +517,7 @@ const displayHeroes2 = (heroesToDisplay) => {
     });
 };
 
-if(screen.width<700){
+if(screen.width<=820){
     loadHeroes2('mage');
     globalCat = 'mage';
 }
