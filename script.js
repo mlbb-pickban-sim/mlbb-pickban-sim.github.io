@@ -166,14 +166,14 @@ const mobileBar = new Chart(ctx10, {
         labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
         datasets: [
             {
-                label: 'Team A',
+                label: 'Blue Team',
                 data:  [0,0,0,0,0,0,0], // Negative values
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             },
             {
-                label: 'Team B',
+                label: 'Red Team',
                 data:  [0,0,0,0,0,0,0], // Positive values
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
                 borderColor: 'rgba(255, 99, 132, 1)',
@@ -217,8 +217,8 @@ const mobileBar = new Chart(ctx10, {
         },
         responsive: true,
         maintainAspectRatio: false,
-        categoryPercentage: 1.0,
-        barPercentage: 1.0
+        categoryPercentage: 1,
+        barPercentage: 0.3,
     },
 });
 const myChart = new Chart(ctx, {
@@ -227,14 +227,14 @@ const myChart = new Chart(ctx, {
         labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
         datasets: [
             {
-                label: 'Team A',
+                label: 'Blue Side',
                 data:  [0,0,0,0,0,0,0], // Negative values
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             },
             {
-                label: 'Team B',
+                label: 'Red Side',
                 data:  [0,0,0,0,0,0,0], // Positive values
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
                 borderColor: 'rgba(255, 99, 132, 1)',
