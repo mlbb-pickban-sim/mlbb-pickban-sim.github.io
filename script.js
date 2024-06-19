@@ -537,6 +537,25 @@ const displayHeroes2 = (heroesToDisplay) => {
                         blueTeamIndicator.style.visibility = 'visible';
                         redTeamIndicator.style.visibility = 'hidden';
                     }
+
+                    if (currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4||currentHeroIndex == 11|| currentHeroIndex == 13) {
+                        targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv)
+                            targetDiv.classList.add('glow-red-small');
+                    } else if(currentHeroIndex == 1 || currentHeroIndex == 3 || currentHeroIndex == 12||currentHeroIndex == 14){
+                        targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv)
+                            targetDiv.classList.add('glow-blue-small');
+                    } else if(currentHeroIndex == 5 || currentHeroIndex == 8 || currentHeroIndex == 9 || currentHeroIndex == 16||currentHeroIndex == 17){
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv)
+                            targetDiv.classList.add('glow-blue');
+                    } else{
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv)
+                            targetDiv.classList.add('glow-red');
+                    }
+
                     if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
                         targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
@@ -557,7 +576,10 @@ const displayHeroes2 = (heroesToDisplay) => {
                         updateBar(mobileBar, selectedHero.name, 1, false);
                         updateMobileRadar(mobileChart, selectedHero.name, 1, false);
                     }
-
+                    targetDiv.classList.remove('glow-blue');
+                    targetDiv.classList.remove('glow-red');
+                    targetDiv.classList.remove('glow-blue-small');
+                    targetDiv.classList.remove('glow-red-small');
                     targetDiv.dataset.hero = selectedHero.name;
                 
                 disableHeroInGrid(selectedHero);
@@ -838,7 +860,6 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
     }
 
     function disableDraftMode() {
-        
         hideTimer();
         pickSlots2 = document.querySelectorAll('.large-div');
         pickSlots1 = document.querySelectorAll('.large-div2');
@@ -881,11 +902,10 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
             
             if (slot.dataset.hero != null) {
                 const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
-                slot.innerHTML = ``;
-                slot.innerHTML = `
-                    <img title="${foundHero.name}" src="${foundHero.bigimg}" alt="${foundHero.name}">
-                    <span class="remove">✕</span>
-                `;
+                var span = document.createElement('span');
+                span.className = 'remove';
+                span.innerHTML = '✕';
+                slot.appendChild(span);
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
@@ -901,6 +921,8 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
             else {
                 slot.addEventListener('click', slotClickListener); 
             }
+
+            slot.classList.remove('glow-red');
         });
 
         pickSlots1.forEach(slot => {
@@ -937,11 +959,10 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
             
             if (slot.dataset.hero != null) {
                 const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
-                slot.innerHTML = ``;
-                slot.innerHTML = `
-                    <img title="${foundHero.name}" src="${foundHero.bigimg}" alt="${foundHero.name}">
-                    <span class="remove">✕</span>
-                `;
+                var span = document.createElement('span');
+                span.className = 'remove';
+                span.innerHTML = '✕';
+                slot.appendChild(span);
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
@@ -957,6 +978,7 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
             else {
                 slot.addEventListener('click', slotClickListener); 
             }
+            slot.classList.remove('glow-red');
         });
 
         banSlots.forEach(slot => {
@@ -999,6 +1021,8 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
             else {
                 slot.addEventListener('click', banSlotClickListener); 
             }
+            slot.classList.remove('glow-blue-small');
+            slot.classList.remove('glow-red-small');
         });
     }
 
@@ -1016,6 +1040,8 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
         largeDivs.forEach(div => div.removeAttribute('data-hero'));
         largeDiv2s.forEach(div => div.removeAttribute('data-hero'));
         smallDivs.forEach(div => div.removeAttribute('data-hero'));
+
+        smallDivs[10].classList.add('glow-blue-small');
 
         // Remove click event listeners
         banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
