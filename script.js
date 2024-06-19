@@ -146,6 +146,8 @@ let selectedHero = null;
 
 const searchInput = document.getElementById('search');
 const searchInput2 = document.getElementById('search2');
+const blueTeamIndicator = document.getElementById('blueTeamIndicator');
+const redTeamIndicator = document.getElementById('redTeamIndicator');
 
 searchInput.addEventListener('input', (event) => {
     const query = event.target.value.toLowerCase();
@@ -516,13 +518,25 @@ const displayHeroes2 = (heroesToDisplay) => {
             heroDiv.addEventListener('click', () => {
                 selectedHero = hero;
                 if(inDraft){
-                    if (currentHeroIndex >= heroOrder.length){ 
-                        hideTimer();
-                        inDraft = false;
-                        return;
-                    }
                     let targetDiv;
                     startTimer();
+                    if(currentHeroIndex == 5){
+                        showNotification("Pick Phase 1")
+                    }
+                    if(currentHeroIndex == 11){
+                        showNotification("Ban Phase 2")
+                    }
+                    if(currentHeroIndex == 15){
+                        showNotification("Pick Phase 2")
+                    }
+                    if(currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4 || currentHeroIndex == 6 ||  currentHeroIndex == 7 ||currentHeroIndex == 10 || currentHeroIndex == 11 || currentHeroIndex == 13 || currentHeroIndex == 15|| currentHeroIndex == 18){
+                        blueTeamIndicator.style.visibility = 'hidden';
+                        redTeamIndicator.style.visibility = 'visible';
+                    }
+                    else{
+                        blueTeamIndicator.style.visibility = 'visible';
+                        redTeamIndicator.style.visibility = 'hidden';
+                    }
                     if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
                         targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
@@ -535,6 +549,7 @@ const displayHeroes2 = (heroesToDisplay) => {
                         updateBar(mobileBar, selectedHero.name, 0, false);
                         updateMobileRadar(mobileChart, selectedHero.name, 0, false);
                     } else {
+                        
                         targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
                         updateRadar(myRadarChart2, selectedHero.name, false);
@@ -546,7 +561,16 @@ const displayHeroes2 = (heroesToDisplay) => {
                     targetDiv.dataset.hero = selectedHero.name;
                 
                 disableHeroInGrid(selectedHero);
-                currentHeroIndex++;}
+                currentHeroIndex++;
+                if (currentHeroIndex >= heroOrder.length){ 
+                    hideTimer();
+                    inDraft = false;
+                    redTeamIndicator.style.visibility = 'hidden';
+                    blueTeamIndicator.style.visibility = 'hidden';
+                    disableDraftMode();
+                    return;
+                }
+            }
             });
         }
         heroGrid2.appendChild(heroDiv);
@@ -990,6 +1014,8 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
         playButton.addEventListener('click', draftModeDisableClick);
 
         showNotification('Draft Mode Enabled');
+        blueTeamIndicator.style.visibility = 'visible';
+        redTeamIndicator.style.visibility = 'hidden';
         showTimer();
     }
 

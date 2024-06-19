@@ -224,10 +224,9 @@ body {
 .remove-sml {
     font-size: 0.2em;
     position: fixed;
-    top: 0.5rem; 
-    right: -0.188rem; 
     background-color: #FF7F7F;
     color: white;
+    top: 20rem;
     border-radius: 20%;
     width: 0.625rem;
     height: 0.625rem;
@@ -287,6 +286,7 @@ body {
 }
 
 @media only screen and (max-device-width: 820px) {
+    
     * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
     .mobile{
         display:flex;
@@ -474,6 +474,8 @@ body {
         height: 70%;
     }
     .large-div2{
+        margin: 0;
+        padding: 0;
         width: 16vw;
         height: 16vh;
         align-self: center;
@@ -489,13 +491,15 @@ body {
         position: relative;
     }
     .remove {
+        margin: 0;
+        padding: 0;
         font-size: x-small;
         position: fixed;
         top: -0.188rem; 
         right: -0.188rem; 
         background-color: #FF7F7F;
         color: white;
-        border-radius: 1px;
+        border-radius: 2px;
         width: 0.938rem;
         height: 0.938rem;
         display: flex;
@@ -504,6 +508,8 @@ body {
         cursor: pointer;
     }
     .large-div{
+        margin: 0;
+        padding: 0;
         width: 16vw;
         height: 16vh;
         align-self: center;
@@ -519,30 +525,40 @@ body {
         position: relative;
     }
     .ban-div{
+        margin: 0;
+        padding: 0;
         display: flex;
         justify-content: space-between;
         align-self: center;
-        width: 70%;
+        width: 80%;
         height: 20%;
     }
     .ban-div2{
+        margin: 0;
+        padding: 0;
         display: flex;
         justify-content: space-between;
+        align-items: start;
         align-self: center;
-        width: 70%;
-        height: 30%;
+        width: 80%;
+        height: 20%;
     }
     .small-div{
+        margin: 0;
+        padding: 0;
         width: 10vw;
         height: 10vw;
         background: #333;
         align-self: center;
         border-radius: 2px;
+        position: relative;
     }
     .remove-sml {
+        margin: 0;
+        padding: 0;
         font-size: 0.2em;
-        position: fixed;
-        top: 0.5rem; 
+        position: absolute;
+        top: -0.1rem; 
         right: -0.188rem; 
         background-color: #FF7F7F;
         color: white;
@@ -557,6 +573,21 @@ body {
     .wrapper{
         transform: scale(1);
         align-self: center;
+    }
+
+    .triangle-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10%;
+        width: 100%;
+    }
+    .triangle {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        visibility: hidden;
     }
     .notification {
         position: fixed;
