@@ -624,6 +624,10 @@ pickSlots1.forEach(slot => {
                 <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                 <span class="remove">✕</span>
             `;
+            var img = slot.querySelector('img');
+            img.onload = function() {
+                img.classList.add('animate');
+            };
             slot.dataset.hero = selectedHero.name;
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -655,6 +659,10 @@ pickSlots2.forEach(slot => {
                 <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                 <span class="remove">✕</span>
             `;
+            var img = slot.querySelector('img');
+            img.onload = function() {
+                img.classList.add('animate');
+            };
             slot.dataset.hero = selectedHero.name;
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -847,6 +855,9 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
                         <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                         <span class="remove">✕</span>
                     `;
+                    img.onload = function() {
+                        img.classList.add('animate');
+                    };
                     slot.dataset.hero = selectedHero.name;
                     slot.querySelector('.remove').addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -899,6 +910,10 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
                         <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                         <span class="remove">✕</span>
                     `;
+                    var img = slot.querySelector('img');
+                    img.onload = function() {
+                        img.classList.add('animate');
+                    };
                     slot.dataset.hero = selectedHero.name;
                     slot.querySelector('.remove').addEventListener('click', (e) => {
                         e.stopPropagation();
