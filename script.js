@@ -998,6 +998,10 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
         largeDiv2s.forEach(div => div.innerHTML = '');
         smallDivs.forEach(div => div.innerHTML = '');
 
+        largeDivs.forEach(div => div.removeAttribute('data-hero'));
+        largeDiv2s.forEach(div => div.removeAttribute('data-hero'));
+        smallDivs.forEach(div => div.removeAttribute('data-hero'));
+
         // Remove click event listeners
         banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
         pickSlots1.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
