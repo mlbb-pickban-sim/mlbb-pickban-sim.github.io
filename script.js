@@ -1034,6 +1034,8 @@ function disableDraftMode() {
         }
         slot.classList.remove('glow-blue-small');
         slot.classList.remove('glow-red-small');
+        redTeamIndicator.style.visibility = 'hidden';
+        blueTeamIndicator.style.visibility = 'hidden';
     });
 }
 
