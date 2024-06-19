@@ -124,7 +124,7 @@ var imgUrls =  [
     'src/nolan.webp', 'src/nolan2.webp', 'src/nolan3.png',
     'src/cici.webp', 'src/cici2.webp', 'src/cici3.png',
     'src/chip.webp', 'src/chip2.webp', 'src/chip3.png',
-    'src/zhuxin.webp', 'src/zhuxin2.webp', 'src/zhuxin3.png'
+    'src/zhuxin.webp', 'src/zhuxin2.webp'
 ];
 for (i=0;i<imgUrls.length;i++) {
     imgs.push(new Image());

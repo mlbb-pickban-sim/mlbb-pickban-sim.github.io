@@ -5,7 +5,7 @@ window.scrollTo(1, 0);
 const ctx = document.getElementById('myChart').getContext('2d');
 
 const heroes = [
-    { name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
+    { name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', splash:'src/miya4.webp',selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
     { name: 'Balmond', categories: ['fighter'], img: 'src/balmond.webp', bigimg: 'src/balmond2.webp', smlimg: 'src/balmond3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
     { name: 'Saber', categories: ['assassin'], img: 'src/saber.webp', bigimg: 'src/saber2.webp', smlimg: 'src/saber3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
     { name: 'Alice', categories: ['mage', 'tank'], img: 'src/alice.webp', bigimg: 'src/alice2.webp', smlimg: 'src/alice3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
@@ -774,139 +774,123 @@ let currentIndex = 0;
 const carousel = document.querySelector('.carousel');
 const items = document.querySelectorAll('.carousel-item');
 const totalItems = items.length;
+const dots = document.querySelectorAll('.dot');
 
 let startX, currentX, deltaX;
 let isDragging = false;
 
 carousel.addEventListener('touchstart', handleTouchStart, false);
-    carousel.addEventListener('touchmove', handleTouchMove, {passive:false});
-    carousel.addEventListener('touchend', handleTouchEnd, false);
+carousel.addEventListener('touchmove', handleTouchMove, {passive:false});
+carousel.addEventListener('touchend', handleTouchEnd, false);
 
-    function handleTouchStart(event) {
-        startX = event.touches[0].clientX;
-        isDragging = true;
-        items.forEach(item => {
-            item.style.transition = 'none';
-        });
-    }
+function handleTouchStart(event) {
+    startX = event.touches[0].clientX;
+    isDragging = true;
+    items.forEach(item => {
+        item.style.transition = 'none';
+    });
+}
 
-    function handleTouchMove(event) {
-        if (!isDragging) return;
-        event.preventDefault();
-        currentX = event.touches[0].clientX;
-        deltaX = currentX - startX;
-        const offset = -currentIndex * 100 + (deltaX / carousel.offsetWidth) * 100;
-        items.forEach(item => {
-            item.style.transform = `translateX(${offset}%)`;
-        });
-    }
+function handleTouchMove(event) {
+    if (!isDragging) return;
+    event.preventDefault();
+    currentX = event.touches[0].clientX;
+    deltaX = currentX - startX;
+    const offset = -currentIndex * 100 + (deltaX / carousel.offsetWidth) * 100;
+    items.forEach(item => {
+        item.style.transform = `translateX(${offset}%)`;
+    });
+}
 
-    function handleTouchEnd(event) {
-        isDragging = false;
-        items.forEach(item => {
-            item.style.transition = 'transform 0.3s ease';
-        });
-        const endX = event.changedTouches[0].clientX;
-        handleSwipe(endX);
-    }
+function handleTouchEnd(event) {
+    isDragging = false;
+    items.forEach(item => {
+        item.style.transition = 'transform 0.3s ease';
+    });
+    const endX = event.changedTouches[0].clientX;
+    handleSwipe(endX);
+}
 
-    function handleSwipe(endX) {
-        if (startX - endX > 50) {
-            nextItem();
-        } else if (endX - startX > 50) {
-            prevItem();
-        } else {
-            updateCarousel();
-        }
-    }
-
-    function nextItem() {
-        if (currentIndex < totalItems - 1) {
-            currentIndex++;
-        }
+function handleSwipe(endX) {
+    if (startX - endX > 50) {
+        nextItem();
+    } else if (endX - startX > 50) {
+        prevItem();
+    } else {
         updateCarousel();
     }
+}
 
-    function prevItem() {
-        if (currentIndex > 0) {
-            currentIndex--;
-        } 
-        updateCarousel();
+function nextItem() {
+    if (currentIndex < totalItems - 1) {
+        currentIndex++;
     }
+    updateCarousel();
+}
 
-    function updateCarousel() {
-        const offset = -currentIndex * 100;
-        items.forEach(item => {
-            item.style.transform = `translateX(${offset}%)`;
-        });
-    }
-    let inDraft = false;
-    let currentHeroIndex = 0;
-    const playButton = document.getElementById('playButton');
-    const icon = document.getElementById('icon');
+function prevItem() {
+    if (currentIndex > 0) {
+        currentIndex--;
+    } 
+    updateCarousel();
+}
 
-    const draftModeEnableClick = () => {
-        icon.classList.remove('play-icon');
-        icon.classList.add('pause-icon');
-        enableDraftMode();
-    }
+function updateCarousel() {
+    const offset = -currentIndex * 100;
+    items.forEach(item => {
+        item.style.transform = `translateX(${offset}%)`;
+    });
+    updateDots();
+}
+
+function updateDots() {
+    dots.forEach(dot => {
+        dot.classList.remove('active');
+    });
+    dots[currentIndex].classList.add('active');
+}
+
+let inDraft = false;
+let currentHeroIndex = 0;
+const playButton = document.getElementById('playButton');
+const icon = document.getElementById('icon');
+
+const draftModeEnableClick = () => {
+    icon.classList.remove('play-icon');
+    icon.classList.add('pause-icon');
+    enableDraftMode();
+}
+
+playButton.addEventListener('click', draftModeEnableClick);
+
+const draftModeDisableClick = () => {
+    icon.classList.add('play-icon');
+    icon.classList.remove('pause-icon');
+    disableDraftMode();
+}
+
+function disableDraftMode() {
+    hideTimer();
+    pickSlots2 = document.querySelectorAll('.large-div');
+    pickSlots1 = document.querySelectorAll('.large-div2');
+    banSlots = document.querySelectorAll('.small-div');
 
     playButton.addEventListener('click', draftModeEnableClick);
+    playButton.removeEventListener('click', draftModeDisableClick);
+    inDraft = false;
 
-    const draftModeDisableClick = () => {
-        icon.classList.add('play-icon');
-        icon.classList.remove('pause-icon');
-        disableDraftMode();
-    }
-
-    function disableDraftMode() {
-        hideTimer();
-        pickSlots2 = document.querySelectorAll('.large-div');
-        pickSlots1 = document.querySelectorAll('.large-div2');
-        banSlots = document.querySelectorAll('.small-div');
-
-        playButton.addEventListener('click', draftModeEnableClick);
-        playButton.removeEventListener('click', draftModeDisableClick);
-        inDraft = false;
-
-        pickSlots2.forEach(slot => {
-            const slotClickListener = () => {
-                if (selectedHero) {
-                    slot.innerHTML = `
-                        <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
-                        <span class="remove">✕</span>
-                    `;
-                    var img = slot.querySelector('img');
-                    img.onload = function() {
-                        img.classList.add('animate');
-                    };
-                    slot.dataset.hero = selectedHero.name;
-                    slot.querySelector('.remove').addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        enableHeroInGrid(slot.dataset.hero);
-                        updateRadar(myRadarChart2, slot.dataset.hero, true);
-                        updateBar(myChart, slot.dataset.hero, 1, true);
-                        updateBar(mobileBar, slot.dataset.hero, 1, true);
-                        updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
-                        slot.innerHTML = '';
-                        slot.removeAttribute('data-hero');
-                        slot.addEventListener('click', slotClickListener); 
-                    });
-                    disableHeroInGrid(selectedHero);
-                    updateRadar(myRadarChart2, slot.dataset.hero, false);
-                    updateBar(myChart, slot.dataset.hero, 1, false);
-                    updateBar(mobileBar, slot.dataset.hero, 1, false);
-                    updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
-                    slot.removeEventListener('click', slotClickListener); 
-                }
-            };
-            
-            if (slot.dataset.hero != null) {
-                const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
-                var span = document.createElement('span');
-                span.className = 'remove';
-                span.innerHTML = '✕';
-                slot.appendChild(span);
+    pickSlots2.forEach(slot => {
+        const slotClickListener = () => {
+            if (selectedHero) {
+                slot.innerHTML = `
+                    <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                    <span class="remove">✕</span>
+                `;
+                var img = slot.querySelector('img');
+                img.onload = function() {
+                    img.classList.add('animate');
+                };
+                slot.dataset.hero = selectedHero.name;
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
@@ -916,54 +900,54 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
                     updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                     slot.innerHTML = '';
                     slot.removeAttribute('data-hero');
-                    slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+                    slot.addEventListener('click', slotClickListener); 
                 });
+                disableHeroInGrid(selectedHero);
+                updateRadar(myRadarChart2, slot.dataset.hero, false);
+                updateBar(myChart, slot.dataset.hero, 1, false);
+                updateBar(mobileBar, slot.dataset.hero, 1, false);
+                updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
+                slot.removeEventListener('click', slotClickListener); 
             }
-            else {
-                slot.addEventListener('click', slotClickListener); 
-            }
+        };
+        
+        if (slot.dataset.hero != null) {
+            const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
+            var span = document.createElement('span');
+            span.className = 'remove';
+            span.innerHTML = '✕';
+            slot.appendChild(span);
+            slot.querySelector('.remove').addEventListener('click', (e) => {
+                e.stopPropagation();
+                enableHeroInGrid(slot.dataset.hero);
+                updateRadar(myRadarChart2, slot.dataset.hero, true);
+                updateBar(myChart, slot.dataset.hero, 1, true);
+                updateBar(mobileBar, slot.dataset.hero, 1, true);
+                updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
+                slot.innerHTML = '';
+                slot.removeAttribute('data-hero');
+                slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+            });
+        }
+        else {
+            slot.addEventListener('click', slotClickListener); 
+        }
 
-            slot.classList.remove('glow-red');
-        });
+        slot.classList.remove('glow-red');
+    });
 
-        pickSlots1.forEach(slot => {
-            const slotClickListener = () => {
-                if (selectedHero) {
-                    slot.innerHTML = `
-                        <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
-                        <span class="remove">✕</span>
-                    `;
-                    var img = slot.querySelector('img');
-                    img.onload = function() {
-                        img.classList.add('animate');
-                    };
-                    slot.dataset.hero = selectedHero.name;
-                    slot.querySelector('.remove').addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        enableHeroInGrid(slot.dataset.hero);
-                        updateRadar(myRadarChart2, slot.dataset.hero, true);
-                        updateBar(myChart, slot.dataset.hero, 0, true);
-                        updateBar(mobileBar, slot.dataset.hero, 0, true);
-                        updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
-                        slot.innerHTML = '';
-                        slot.removeAttribute('data-hero');
-                        slot.addEventListener('click', slotClickListener); 
-                    });
-                    disableHeroInGrid(selectedHero);
-                    updateRadar(myRadarChart2, slot.dataset.hero, false);
-                    updateBar(myChart, slot.dataset.hero, 0, false);
-                    updateBar(mobileBar, slot.dataset.hero, 0, false);
-                    updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
-                    slot.removeEventListener('click', slotClickListener); 
-                }
-            };
-            
-            if (slot.dataset.hero != null) {
-                const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
-                var span = document.createElement('span');
-                span.className = 'remove';
-                span.innerHTML = '✕';
-                slot.appendChild(span);
+    pickSlots1.forEach(slot => {
+        const slotClickListener = () => {
+            if (selectedHero) {
+                slot.innerHTML = `
+                    <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                    <span class="remove">✕</span>
+                `;
+                var img = slot.querySelector('img');
+                img.onload = function() {
+                    img.classList.add('animate');
+                };
+                slot.dataset.hero = selectedHero.name;
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
@@ -973,44 +957,50 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
                     updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                     slot.innerHTML = '';
                     slot.removeAttribute('data-hero');
-                    slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+                    slot.addEventListener('click', slotClickListener); 
                 });
+                disableHeroInGrid(selectedHero);
+                updateRadar(myRadarChart2, slot.dataset.hero, false);
+                updateBar(myChart, slot.dataset.hero, 0, false);
+                updateBar(mobileBar, slot.dataset.hero, 0, false);
+                updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
+                slot.removeEventListener('click', slotClickListener); 
             }
-            else {
-                slot.addEventListener('click', slotClickListener); 
-            }
-            slot.classList.remove('glow-blue');
-        });
+        };
+        
+        if (slot.dataset.hero != null) {
+            const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
+            var span = document.createElement('span');
+            span.className = 'remove';
+            span.innerHTML = '✕';
+            slot.appendChild(span);
+            slot.querySelector('.remove').addEventListener('click', (e) => {
+                e.stopPropagation();
+                enableHeroInGrid(slot.dataset.hero);
+                updateRadar(myRadarChart2, slot.dataset.hero, true);
+                updateBar(myChart, slot.dataset.hero, 0, true);
+                updateBar(mobileBar, slot.dataset.hero, 0, true);
+                updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
+                slot.innerHTML = '';
+                slot.removeAttribute('data-hero');
+                slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+            });
+        }
+        else {
+            slot.addEventListener('click', slotClickListener); 
+        }
+        slot.classList.remove('glow-blue');
+    });
 
-        banSlots.forEach(slot => {
-            const banSlotClickListener = () => {
-                if (selectedHero) {
-                    slot.innerHTML = `
-                        <img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
-                        <div class="ban-indicator"></div>
-                        <span class="remove-sml">✕</span>
-                    `;
-                    slot.dataset.hero = selectedHero.name;
-                    slot.querySelector('.remove-sml').addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        enableHeroInGrid(slot.dataset.hero);
-                        slot.innerHTML = '';
-                        slot.removeAttribute('data-hero');
-                        slot.addEventListener('click', banSlotClickListener); 
-                    });
-                    disableHeroInGrid(selectedHero);
-                    slot.removeEventListener('click', banSlotClickListener); 
-                }
-            };
-
-            if (slot.dataset.hero != null) {
-                const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
-                slot.innerHTML = ``;
+    banSlots.forEach(slot => {
+        const banSlotClickListener = () => {
+            if (selectedHero) {
                 slot.innerHTML = `
-                    <img title="${foundHero.name}" src="${foundHero.smlimg}" alt="${foundHero.name}">
+                    <img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
                     <div class="ban-indicator"></div>
                     <span class="remove-sml">✕</span>
                 `;
+                slot.dataset.hero = selectedHero.name;
                 slot.querySelector('.remove-sml').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
@@ -1018,107 +1008,127 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
                     slot.removeAttribute('data-hero');
                     slot.addEventListener('click', banSlotClickListener); 
                 });
+                disableHeroInGrid(selectedHero);
+                slot.removeEventListener('click', banSlotClickListener); 
             }
-            else {
+        };
+
+        if (slot.dataset.hero != null) {
+            const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
+            slot.innerHTML = ``;
+            slot.innerHTML = `
+                <img title="${foundHero.name}" src="${foundHero.smlimg}" alt="${foundHero.name}">
+                <div class="ban-indicator"></div>
+                <span class="remove-sml">✕</span>
+            `;
+            slot.querySelector('.remove-sml').addEventListener('click', (e) => {
+                e.stopPropagation();
+                enableHeroInGrid(slot.dataset.hero);
+                slot.innerHTML = '';
+                slot.removeAttribute('data-hero');
                 slot.addEventListener('click', banSlotClickListener); 
-            }
-            slot.classList.remove('glow-blue-small');
-            slot.classList.remove('glow-red-small');
-        });
-    }
-
-    function enableDraftMode() {
-        currentHeroIndex = 0;
-        const largeDivs = document.querySelectorAll('.large-div');
-        const largeDiv2s = document.querySelectorAll('.large-div2');
-        const smallDivs = document.querySelectorAll('.small-div');
-
-        // Clear innerHTML
-        largeDivs.forEach(div => div.innerHTML = '');
-        largeDiv2s.forEach(div => div.innerHTML = '');
-        smallDivs.forEach(div => div.innerHTML = '');
-
-        largeDivs.forEach(div => div.removeAttribute('data-hero'));
-        largeDiv2s.forEach(div => div.removeAttribute('data-hero'));
-        smallDivs.forEach(div => div.removeAttribute('data-hero'));
-
-        smallDivs[10].classList.add('glow-blue-small');
-
-        // Remove click event listeners
-        banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
-        pickSlots1.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
-        pickSlots2.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
-
-        heroes.forEach(hero => {
-            hero.selected = false;
-        });
-
-        loadHeroes2(globalCat);
-
-        inDraft = true;
-        playButton.removeEventListener('click', draftModeEnableClick);
-        playButton.addEventListener('click', draftModeDisableClick);
-
-        showNotification('Draft Mode Enabled');
-        blueTeamIndicator.style.visibility = 'visible';
-        redTeamIndicator.style.visibility = 'hidden';
-        showTimer();
-    }
-
-    function showNotification(message) {
-        const notification = document.createElement('div');
-        notification.classList.add('notification');
-        notification.innerText = message;
-    
-        document.body.appendChild(notification);
-    
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-   
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 500); 
-        }, 2500);
-    }
-
-    const countdownBar = document.getElementById('countdown-bar');
-    const timerContainer = document.getElementById('timer-container');
-    let totalTime = 30; 
-    let currentTime = totalTime;
-    const updateInterval = 10; 
-    const initialWidth = 100; 
-    let timerInterval;
-
-    function updateCountdown() {
-        if (currentTime <= 0) {
-            clearInterval(timerInterval);
-            currentTime = 0;
-            countdownBar.style.width = '0%'; 
-            return;
+            });
         }
+        else {
+            slot.addEventListener('click', banSlotClickListener); 
+        }
+        slot.classList.remove('glow-blue-small');
+        slot.classList.remove('glow-red-small');
+    });
+}
 
-        currentTime -= updateInterval / 1000; 
-        let widthPercentage = (currentTime / totalTime) * initialWidth;
-        countdownBar.style.width = widthPercentage + '%';
-    }
+function enableDraftMode() {
+    currentHeroIndex = 0;
+    const largeDivs = document.querySelectorAll('.large-div');
+    const largeDiv2s = document.querySelectorAll('.large-div2');
+    const smallDivs = document.querySelectorAll('.small-div');
 
-    function startTimer() {
-        currentTime = totalTime;
-        countdownBar.style.width = initialWidth + '%'; 
-        clearInterval(timerInterval); 
-        timerInterval = setInterval(updateCountdown, updateInterval); 
-    }
+    // Clear innerHTML
+    largeDivs.forEach(div => div.innerHTML = '');
+    largeDiv2s.forEach(div => div.innerHTML = '');
+    smallDivs.forEach(div => div.innerHTML = '');
 
-    function showTimer() {
-        timerContainer.style.visibility = 'visible'; 
-        startTimer(); 
-    }
+    largeDivs.forEach(div => div.removeAttribute('data-hero'));
+    largeDiv2s.forEach(div => div.removeAttribute('data-hero'));
+    smallDivs.forEach(div => div.removeAttribute('data-hero'));
 
-    function hideTimer(){
-        timerContainer.style.visibility = 'hidden'; 
+    smallDivs[10].classList.add('glow-blue-small');
+
+    // Remove click event listeners
+    banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
+    pickSlots1.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
+    pickSlots2.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
+
+    heroes.forEach(hero => {
+        hero.selected = false;
+    });
+
+    loadHeroes2(globalCat);
+
+    inDraft = true;
+    playButton.removeEventListener('click', draftModeEnableClick);
+    playButton.addEventListener('click', draftModeDisableClick);
+
+    showNotification('Draft Mode Enabled');
+    blueTeamIndicator.style.visibility = 'visible';
+    redTeamIndicator.style.visibility = 'hidden';
+    showTimer();
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerText = message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 500); 
+    }, 2500);
+}
+
+const countdownBar = document.getElementById('countdown-bar');
+const timerContainer = document.getElementById('timer-container');
+let totalTime = 30; 
+let currentTime = totalTime;
+const updateInterval = 10; 
+const initialWidth = 100; 
+let timerInterval;
+
+function updateCountdown() {
+    if (currentTime <= 0) {
         clearInterval(timerInterval);
+        currentTime = 0;
+        countdownBar.style.width = '0%'; 
+        return;
     }
+
+    currentTime -= updateInterval / 1000; 
+    let widthPercentage = (currentTime / totalTime) * initialWidth;
+    countdownBar.style.width = widthPercentage + '%';
+}
+
+function startTimer() {
+    currentTime = totalTime;
+    countdownBar.style.width = initialWidth + '%'; 
+    clearInterval(timerInterval); 
+    timerInterval = setInterval(updateCountdown, updateInterval); 
+}
+
+function showTimer() {
+    timerContainer.style.visibility = 'visible'; 
+    startTimer(); 
+}
+
+function hideTimer(){
+    timerContainer.style.visibility = 'hidden'; 
+    clearInterval(timerInterval);
+}
 });
