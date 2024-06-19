@@ -978,7 +978,7 @@ carousel.addEventListener('touchstart', handleTouchStart, false);
             else {
                 slot.addEventListener('click', slotClickListener); 
             }
-            slot.classList.remove('glow-red');
+            slot.classList.remove('glow-blue');
         });
 
         banSlots.forEach(slot => {
