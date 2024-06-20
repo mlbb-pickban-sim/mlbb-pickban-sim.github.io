@@ -132,6 +132,12 @@ const heroes = [
     { name: 'Zhuxin', categories: ['mage'], img: 'src/zhuxin.webp', bigimg: 'src/zhuxin2.webp', smlimg: 'src/zhuxin3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 }
 ];
 
+heroes.forEach(function (element){
+    element.splash = "src/"+element.name.toLowerCase()+"4.webp";
+})
+
+console.log(heroes[2])
+
 const heroOrder = [
     10, 15, 11, 16, 12, 17, 5, 5, 6, 6, 7, 7, 18, 13, 19, 14, 8, 8, 9, 9
 ];
@@ -692,10 +698,13 @@ function resetDivs(team) {
 pickSlots1.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
-            slot.innerHTML = `
-                <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
-                <span class="remove">✕</span>
-            `;
+            if(screen.width <= 820)
+                slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                <span class="remove">✕</span>`;
+            else
+                slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                <span class="pick-slot-text">${selectedHero.name}</span>
+                    <span class="remove">✕</span>`;
             var img = slot.querySelector('img');
             img.onload = function() {
                 img.classList.add('animate');
@@ -727,10 +736,13 @@ pickSlots1.forEach(slot => {
 pickSlots2.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
-            slot.innerHTML = `
-                <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
-                <span class="remove">✕</span>
-            `;
+            if(screen.width <= 820)
+                slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                <span class="remove">✕</span>`;
+            else
+                slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                <span class="pick-slot-text">${selectedHero.name}</span>
+                    <span class="remove">✕</span>`;
             var img = slot.querySelector('img');
             img.onload = function() {
                 img.classList.add('animate');
@@ -763,14 +775,14 @@ pickSlots2.forEach(slot => {
 const disableHeroInGrid = (heroName) => {
     heroName.selected = true;
     selectedHero=null;
-    //loadHeroes(globalCat);
+    loadHeroes(globalCat);
     loadHeroes2(globalCat);
 };
 
 const enableHeroInGrid = (heroName) => {
     const foundHero = heroes.find(hero => hero.name === heroName);
     foundHero.selected = false;
-    //loadHeroes(globalCat);
+    loadHeroes(globalCat);
     loadHeroes2(globalCat);
 };
 
@@ -931,10 +943,13 @@ function disableDraftMode() {
     pickSlots2.forEach(slot => {
         const slotClickListener = () => {
             if (selectedHero) {
-                slot.innerHTML = `
-                    <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
-                    <span class="remove">✕</span>
-                `;
+                if(screen.width <= 820)
+                    slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                    <span class="remove">✕</span>`;
+                else
+                    slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                    <span class="pick-slot-text">${selectedHero.name}</span>
+                        <span class="remove">✕</span>`;
                 var img = slot.querySelector('img');
                 img.onload = function() {
                     img.classList.add('animate');
@@ -988,10 +1003,13 @@ function disableDraftMode() {
     pickSlots1.forEach(slot => {
         const slotClickListener = () => {
             if (selectedHero) {
-                slot.innerHTML = `
-                    <img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
-                    <span class="remove">✕</span>
-                `;
+                if(screen.width <= 820)
+                    slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
+                    <span class="remove">✕</span>`;
+                else
+                    slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                    <span class="pick-slot-text">${selectedHero.name}</span>
+                        <span class="remove">✕</span>`;
                 var img = slot.querySelector('img');
                 img.onload = function() {
                     img.classList.add('animate');
