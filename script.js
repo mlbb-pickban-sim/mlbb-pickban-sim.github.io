@@ -139,6 +139,7 @@ const heroOrder = [
 const heroGrid = document.querySelector('.hero-grid');
 const heroGrid2 = document.querySelector('.hero-grid2');
 const categories = document.querySelectorAll('.hero-categories button');
+const categories2 = document.querySelectorAll('.hero-categories2 button');
 let banSlots = document.querySelectorAll('.small-div');
 let pickSlots1 = document.querySelectorAll('.large-div2');
 let pickSlots2 = document.querySelectorAll('.large-div');
@@ -469,7 +470,7 @@ const loadHeroes = (category) => {
 };
 
 const loadHeroes2 = (category) => {
-    const heroesToDisplay = heroes.filter(hero => hero.categories.includes(category));
+    const heroesToDisplay = category === 'all' ? heroes : heroes.filter(hero => hero.categories.includes(category));
     displayHeroes2(heroesToDisplay);
 };
 
@@ -479,8 +480,13 @@ const filterHeroes = (query) => {
 };
 
 const trueFilter = (query, category) => {
-    const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query) && hero.categories.includes(category));
+    if(query != ''){
+    const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query));
     displayHeroes2(filteredHeroes);
+    }
+    else{
+    loadHeroes2(category);
+}
 }
 
 const displayHeroes = (heroesToDisplay) => {
@@ -611,6 +617,11 @@ else{
 categories.forEach(button => {
     button.addEventListener('click', () => {
         loadHeroes(button.dataset.category);
+        globalCat = button.dataset.category;
+    });
+});
+categories2.forEach(button => {
+    button.addEventListener('click', () => {
         loadHeroes2(button.dataset.category);
         globalCat = button.dataset.category;
     });
@@ -819,7 +830,7 @@ let startX, currentX, deltaX;
 let isDragging = false;
 
 carousel.addEventListener('touchstart', handleTouchStart, false);
-carousel.addEventListener('touchmove', handleTouchMove, {passive:false});
+carousel.addEventListener('touchmove', handleTouchMove, false);
 carousel.addEventListener('touchend', handleTouchEnd, false);
 
 function handleTouchStart(event) {
@@ -832,7 +843,6 @@ function handleTouchStart(event) {
 
 function handleTouchMove(event) {
     if (!isDragging) return;
-    event.preventDefault();
     currentX = event.touches[0].clientX;
     deltaX = currentX - startX;
     const offset = -currentIndex * 100 + (deltaX / carousel.offsetWidth) * 100;

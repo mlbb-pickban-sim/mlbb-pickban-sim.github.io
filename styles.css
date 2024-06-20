@@ -400,40 +400,41 @@ body {
         background-color: #bbb;
     }
 
-    .hero-selection {
+    .hero-selection2 {
         width: 100vw;
         display: flex;
         flex-direction: column;
-        align-self: start;
         padding: 0;
         margin: 0;
     }
     
-    .hero-categories {
+    .hero-categories2 {
         margin-top: 1vh;
         padding: 0;
-        display: inline-flex;
-        align-items: center;
+        display: flex;
+        height: 10vw;
+        width: 98vw;
+        align-self: center;
+        justify-content: space-between;
     }
     
-    .hero-categories button {
+    .hero-categories2 button {
         background-color: transparent;
-        margin: 0.2vw;
     }
 
-    .hero-categories input {
+    .hero-categories2 input {
         margin: 0;
-        margin-right: 1vw;
         background-color: #2d2d2d;
         border: none;
+        padding-left: 2vw;
         border-radius: 0;
         font-size: 2vw;
-        width: 20vw;
+        width: 17vw;
         height: 10vw;
         color: #7a7a7a;
     }
     
-    .hero-categories input:focus{
+    .hero-categories2 input:focus{
         outline: none;
     }
 
@@ -480,7 +481,6 @@ body {
         align-items: center;
         cursor: pointer;
         border-radius: 2px;
-        margin-right: 1vw;
     }
     
     .play-icon {
@@ -508,10 +508,19 @@ body {
         background-color: #7a7a7a;
     }
 
+    .hero {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        padding: 0;
+        margin: 0;
+    }
     .hero-grid2 {
         padding:0;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(60px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(40px,1fr));
         grid-auto-rows: min-content;
         align-items: center;
         gap: 1vw;
@@ -521,18 +530,6 @@ body {
     .hero-grid2::-webkit-scrollbar {
         display: none;
     }
-
-
-    .hero {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        overflow: hidden;
-        position: relative;
-        padding: 0;
-        margin: 0;
-    }
-    
     .hero img {
         width: 100%;
         height: 100%;
@@ -711,6 +708,7 @@ body {
         align-self: center;
         border-radius: 2px;
         position: relative;
+        overflow:visible;
     }
     .small-div img{
         width:100%;
@@ -793,8 +791,8 @@ body {
 
 @media screen and (max-width: 680px){
     .hero {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         overflow: hidden;
         position: relative;
@@ -804,7 +802,7 @@ body {
     .hero-grid2 {
         padding:0;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(45px,1fr));
+        grid-template-columns: repeat(auto-fill, minmax(40px,1fr));
         grid-auto-rows: min-content;
         align-items: center;
         gap: 1vw;
@@ -824,14 +822,19 @@ body {
         margin: 0;
     }
     .hero-grid2 {
+        margin-top: 1vh;
         padding:0;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(40px,1fr));
         grid-auto-rows: min-content;
+        justify-content: space-evenly;
         align-items: center;
+        align-self: center;
         gap: 1vw;
-        width: 95vw;
+        width: 98vw;
+        height: 31vh;
         overflow-y: scroll;
+        -webkit-overflow-scrolling: touch; 
     }
 }
 
