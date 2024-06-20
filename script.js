@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.scrollTo(1, 0);
 
-const ctx = document.getElementById('myChart').getContext('2d');
+//const ctx = document.getElementById('myChart').getContext('2d');
 
 const heroes = [
     { name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', splash:'src/miya4.webp',selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
@@ -149,10 +149,10 @@ const searchInput2 = document.getElementById('search2');
 const blueTeamIndicator = document.getElementById('blueTeamIndicator');
 const redTeamIndicator = document.getElementById('redTeamIndicator');
 
-searchInput.addEventListener('input', (event) => {
-    const query = event.target.value.toLowerCase();
-    filterHeroes(query);
-});
+// searchInput.addEventListener('input', (event) => {
+//     const query = event.target.value.toLowerCase();
+//     filterHeroes(query);
+// });
 
 searchInput2.addEventListener('input', (event) => {
     const query = event.target.value.toLowerCase();
@@ -221,159 +221,159 @@ const mobileBar = new Chart(ctx10, {
         barPercentage: 0.3,
     },
 });
-const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
-        datasets: [
-            {
-                label: 'Blue Side',
-                data:  [0,0,0,0,0,0,0], // Negative values
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            },
-            {
-                label: 'Red Side',
-                data:  [0,0,0,0,0,0,0], // Positive values
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }
-        ]
-    },
-    options: {
-        indexAxis: 'y',
-        scales: {
-            x: {
-                beginAtZero: true,
-                min: -10,
-                max: 10,
-                ticks: {
-                    callback: function(value) {
-                        return Math.abs(value);
-                    }
-                }
-            },
-            y: {
-                stacked: true
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        let label = context.dataset.label || '';
-                        if (label) {
-                            label += ': ';
-                        }
-                        label += Math.abs(context.raw);
-                        return label;
-                    }
-                }
-            }
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        categoryPercentage: 1.0,
-        barPercentage: 1.0
-    },
-});
+// const myChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//         labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
+//         datasets: [
+//             {
+//                 label: 'Blue Side',
+//                 data:  [0,0,0,0,0,0,0], // Negative values
+//                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
+//                 borderColor: 'rgba(54, 162, 235, 1)',
+//                 borderWidth: 1
+//             },
+//             {
+//                 label: 'Red Side',
+//                 data:  [0,0,0,0,0,0,0], // Positive values
+//                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
+//                 borderColor: 'rgba(255, 99, 132, 1)',
+//                 borderWidth: 1
+//             }
+//         ]
+//     },
+//     options: {
+//         indexAxis: 'y',
+//         scales: {
+//             x: {
+//                 beginAtZero: true,
+//                 min: -10,
+//                 max: 10,
+//                 ticks: {
+//                     callback: function(value) {
+//                         return Math.abs(value);
+//                     }
+//                 }
+//             },
+//             y: {
+//                 stacked: true
+//             }
+//         },
+//         plugins: {
+//             legend: {
+//                 display: false
+//             },
+//             tooltip: {
+//                 callbacks: {
+//                     label: function(context) {
+//                         let label = context.dataset.label || '';
+//                         if (label) {
+//                             label += ': ';
+//                         }
+//                         label += Math.abs(context.raw);
+//                         return label;
+//                     }
+//                 }
+//             }
+//         },
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         categoryPercentage: 1.0,
+//         barPercentage: 1.0
+//     },
+// });
 
-const ctx2 = document.getElementById('myRadarChart2').getContext('2d');
-const myRadarChart2 = new Chart(ctx2, {
-    type: 'radar',
-    data: {
-        labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
-        datasets: [{
-            label: 'Red Team',
-            data: [0,0,0,0,0,0], // Update these values with your data
-            fill: true,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
-        }]
-    },
-    options: {
-        responsive: true,
-        animation: {
-            duration: 500
-        },
-        scales: {
-            r: {
-                min: 0,
-                max: 10,
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1,
-                    display: false,
-                },
-                angleLines: {
-                    display: true,
-                    color: 'gray'
-                },
-                grid: {
-                    color: 'gray' 
-                },
-                pointLabels: {
-                    color: 'gray',
-                }
-            }
-        }
-    }   
-});
+// const ctx2 = document.getElementById('myRadarChart2').getContext('2d');
+// const myRadarChart2 = new Chart(ctx2, {
+//     type: 'radar',
+//     data: {
+//         labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
+//         datasets: [{
+//             label: 'Red Team',
+//             data: [0,0,0,0,0,0], // Update these values with your data
+//             fill: true,
+//             backgroundColor: 'rgba(255, 99, 132, 0.2)',
+//             borderColor: 'rgba(255, 99, 132, 1)',
+//             pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+//             pointBorderColor: '#fff',
+//             pointHoverBackgroundColor: '#fff',
+//             pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         animation: {
+//             duration: 500
+//         },
+//         scales: {
+//             r: {
+//                 min: 0,
+//                 max: 10,
+//                 ticks: {
+//                     beginAtZero: true,
+//                     stepSize: 1,
+//                     display: false,
+//                 },
+//                 angleLines: {
+//                     display: true,
+//                     color: 'gray'
+//                 },
+//                 grid: {
+//                     color: 'gray' 
+//                 },
+//                 pointLabels: {
+//                     color: 'gray',
+//                 }
+//             }
+//         }
+//     }   
+// });
 
-const ctx3 = document.getElementById('myRadarChart1').getContext('2d');
-const myRadarChart1 = new Chart(ctx3, {
-    type: 'radar',
-    data: {
-        labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
-        datasets: [{
-            label: 'Blue Team',
-            data: [0,0,0,0,0,0], // Update these values with your data
-            fill: true,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
-        }]
-    },
-    options: {
-        responsive: true,
-        animation: {
-            duration: 500
-        },
-        scales: {
-            r: {
-                min: 0,
-                max: 10,
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1,
-                    display: false,
-                },
-                angleLines: {
-                    display: true,
-                    color: 'gray' 
-                },
-                grid: {
-                    color: 'gray' 
-                },
-                pointLabels: {
-                    color: 'gray' 
-                }
-            }
-        }
-    }   
-});
+// const ctx3 = document.getElementById('myRadarChart1').getContext('2d');
+// const myRadarChart1 = new Chart(ctx3, {
+//     type: 'radar',
+//     data: {
+//         labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
+//         datasets: [{
+//             label: 'Blue Team',
+//             data: [0,0,0,0,0,0], // Update these values with your data
+//             fill: true,
+//             backgroundColor: 'rgba(54, 162, 235, 0.2)',
+//             borderColor: 'rgba(54, 162, 235, 1)',
+//             pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+//             pointBorderColor: '#fff',
+//             pointHoverBackgroundColor: '#fff',
+//             pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         animation: {
+//             duration: 500
+//         },
+//         scales: {
+//             r: {
+//                 min: 0,
+//                 max: 10,
+//                 ticks: {
+//                     beginAtZero: true,
+//                     stepSize: 1,
+//                     display: false,
+//                 },
+//                 angleLines: {
+//                     display: true,
+//                     color: 'gray' 
+//                 },
+//                 grid: {
+//                     color: 'gray' 
+//                 },
+//                 pointLabels: {
+//                     color: 'gray' 
+//                 }
+//             }
+//         }
+//     }   
+// });
 
 const ctx4 = document.getElementById('mobileRadar1').getContext('2d');
 const mobileChart = new Chart(ctx4,{
@@ -463,45 +463,45 @@ function updateMobileRadar(chart, heroName, team, mode){
     chart.update();
 }
 
-const loadHeroes = (category) => {
-    const heroesToDisplay = category === 'all' ? heroes : heroes.filter(hero => hero.categories.includes(category));
-    displayHeroes(heroesToDisplay);
-};
+// const loadHeroes = (category) => {
+//     const heroesToDisplay = category === 'all' ? heroes : heroes.filter(hero => hero.categories.includes(category));
+//     displayHeroes(heroesToDisplay);
+// };
 
 const loadHeroes2 = (category) => {
     const heroesToDisplay = heroes.filter(hero => hero.categories.includes(category));
     displayHeroes2(heroesToDisplay);
 };
 
-const filterHeroes = (query) => {
-    const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query));
-    displayHeroes(filteredHeroes);
-};
+// const filterHeroes = (query) => {
+//     const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query));
+//     displayHeroes(filteredHeroes);
+// };
 
 const trueFilter = (query, category) => {
     const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query) && hero.categories.includes(category));
     displayHeroes2(filteredHeroes);
 }
 
-const displayHeroes = (heroesToDisplay) => {
-    heroGrid.innerHTML = '';
-    heroesToDisplay.forEach(hero => {
-        const heroDiv = document.createElement('div');
-        heroDiv.classList.add('hero');
-        heroDiv.dataset.hero = hero.name;
-        heroDiv.dataset.categories = hero.categories.join(',');
+// const displayHeroes = (heroesToDisplay) => {
+//     heroGrid.innerHTML = '';
+//     heroesToDisplay.forEach(hero => {
+//         const heroDiv = document.createElement('div');
+//         heroDiv.classList.add('hero');
+//         heroDiv.dataset.hero = hero.name;
+//         heroDiv.dataset.categories = hero.categories.join(',');
 
-        if (hero.selected === true) {
-            heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
-        } else {
-            heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
-            heroDiv.addEventListener('click', () => {
-                selectedHero = hero;
-            });
-        }
-        heroGrid.appendChild(heroDiv);
-    });
-};
+//         if (hero.selected === true) {
+//             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
+//         } else {
+//             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
+//             heroDiv.addEventListener('click', () => {
+//                 selectedHero = hero;
+//             });
+//         }
+//         heroGrid.appendChild(heroDiv);
+//     });
+// };
 
 const displayHeroes2 = (heroesToDisplay) => {
     heroGrid2.innerHTML = '';
@@ -563,16 +563,16 @@ const displayHeroes2 = (heroesToDisplay) => {
                     } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
                         targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
-                        updateRadar(myRadarChart1, selectedHero.name, false);
-                        updateBar(myChart, selectedHero.name, 0, false);
+                        //updateRadar(myRadarChart1, selectedHero.name, false);
+                        //updateBar(myChart, selectedHero.name, 0, false);
                         updateBar(mobileBar, selectedHero.name, 0, false);
                         updateMobileRadar(mobileChart, selectedHero.name, 0, false);
                     } else {
                         
                         targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
-                        updateRadar(myRadarChart2, selectedHero.name, false);
-                        updateBar(myChart, selectedHero.name, 1, false);
+                        //updateRadar(myRadarChart2, selectedHero.name, false);
+                        //updateBar(myChart, selectedHero.name, 1, false);
                         updateBar(mobileBar, selectedHero.name, 1, false);
                         updateMobileRadar(mobileChart, selectedHero.name, 1, false);
                     }
@@ -604,13 +604,13 @@ if(screen.width<=820){
     globalCat = 'mage';
 }
 else{
-    loadHeroes('all');
+    //loadHeroes('all');
     globalCat = 'all';
 }
 
 categories.forEach(button => {
     button.addEventListener('click', () => {
-        loadHeroes(button.dataset.category);
+        //loadHeroes(button.dataset.category);
         loadHeroes2(button.dataset.category);
         globalCat = button.dataset.category;
     });
@@ -639,6 +639,54 @@ banSlots.forEach(slot => {
     slot.addEventListener('click', banSlotClickListener);
 });
 
+function expandDiv(element, team) {
+    let allDivs;
+    if(team == 1){
+        allDivs = document.querySelectorAll('.large-div');
+    }
+    else{
+        allDivs = document.querySelectorAll('.large-div2');
+    }
+    allDivs.forEach(div => {
+        if(div != element){
+        div.style.height = '15.5vh';
+        const pickSlotText = div.querySelector('.pick-slot-text');
+        if (pickSlotText) {
+            pickSlotText.style.top = '11vh';
+        }
+        }
+    });
+    element.style.height = '28vh';
+    const pickSlotText = element.querySelector('.pick-slot-text');
+    if (pickSlotText) {
+        pickSlotText.style.top = '23.5vh';
+    }
+}
+function resetDivs(team) {
+    let allDivs
+    if(team == 1)
+        allDivs = document.querySelectorAll('.large-div');
+    else
+        allDivs = document.querySelectorAll('.large-div2');
+
+    allDivs.forEach(div => {
+        div.style.height = '18vh';
+        const pickSlotText = div.querySelector('.pick-slot-text');
+        if (pickSlotText) {
+            pickSlotText.style.top = ''; // Reset to original value or specify a value if needed
+        }
+    });
+}
+
+document.getElementById('expandButton').addEventListener('click', function() {
+    const specificDiv = document.querySelectorAll('.large-div2')[1]; // Change the index as needed
+    expandDiv(specificDiv, 0);
+});
+
+document.getElementById('resetButton').addEventListener('click', function() {
+    resetDivs(0);
+});
+
 pickSlots1.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
@@ -654,8 +702,8 @@ pickSlots1.forEach(slot => {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                updateRadar(myRadarChart1, slot.dataset.hero, true);
-                updateBar(myChart, slot.dataset.hero, 0, true);
+                //updateRadar(myRadarChart1, slot.dataset.hero, true);
+                //updateBar(myChart, slot.dataset.hero, 0, true);
                 updateBar(mobileBar, slot.dataset.hero, 0, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                 slot.innerHTML = '';
@@ -663,8 +711,8 @@ pickSlots1.forEach(slot => {
                 slot.addEventListener('click', slotClickListener); 
             });
             disableHeroInGrid(selectedHero);
-            updateRadar(myRadarChart1, slot.dataset.hero, false);
-            updateBar(myChart, slot.dataset.hero, 0, false);
+            //updateRadar(myRadarChart1, slot.dataset.hero, false);
+            //updateBar(myChart, slot.dataset.hero, 0, false);
             updateBar(mobileBar, slot.dataset.hero, 0, false);
             updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
             slot.removeEventListener('click', slotClickListener); 
@@ -689,8 +737,8 @@ pickSlots2.forEach(slot => {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                updateRadar(myRadarChart2, slot.dataset.hero, true);
-                updateBar(myChart, slot.dataset.hero, 1, true);
+                //updateRadar(myRadarChart2, slot.dataset.hero, true);
+                //updateBar(myChart, slot.dataset.hero, 1, true);
                 updateBar(mobileBar, slot.dataset.hero, 1, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                 slot.innerHTML = '';
@@ -698,8 +746,8 @@ pickSlots2.forEach(slot => {
                 slot.addEventListener('click', slotClickListener); // Re-attach the click listener
             });
             disableHeroInGrid(selectedHero);
-            updateRadar(myRadarChart2, slot.dataset.hero, false);
-            updateBar(myChart, slot.dataset.hero, 1, false);
+            //updateRadar(myRadarChart2, slot.dataset.hero, false);
+            //updateBar(myChart, slot.dataset.hero, 1, false);
             updateBar(mobileBar, slot.dataset.hero, 1, false);
             updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
             slot.removeEventListener('click', slotClickListener); // Remove the click listener
@@ -713,14 +761,14 @@ pickSlots2.forEach(slot => {
 const disableHeroInGrid = (heroName) => {
     heroName.selected = true;
     selectedHero=null;
-    loadHeroes(globalCat);
+    //loadHeroes(globalCat);
     loadHeroes2(globalCat);
 };
 
 const enableHeroInGrid = (heroName) => {
     const foundHero = heroes.find(hero => hero.name === heroName);
     foundHero.selected = false;
-    loadHeroes(globalCat);
+    //loadHeroes(globalCat);
     loadHeroes2(globalCat);
 };
 
@@ -894,8 +942,8 @@ function disableDraftMode() {
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
-                    updateRadar(myRadarChart2, slot.dataset.hero, true);
-                    updateBar(myChart, slot.dataset.hero, 1, true);
+                    //updateRadar(myRadarChart2, slot.dataset.hero, true);
+                    //updateBar(myChart, slot.dataset.hero, 1, true);
                     updateBar(mobileBar, slot.dataset.hero, 1, true);
                     updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                     slot.innerHTML = '';
@@ -903,8 +951,8 @@ function disableDraftMode() {
                     slot.addEventListener('click', slotClickListener); 
                 });
                 disableHeroInGrid(selectedHero);
-                updateRadar(myRadarChart2, slot.dataset.hero, false);
-                updateBar(myChart, slot.dataset.hero, 1, false);
+                //updateRadar(myRadarChart2, slot.dataset.hero, false);
+                //updateBar(myChart, slot.dataset.hero, 1, false);
                 updateBar(mobileBar, slot.dataset.hero, 1, false);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
                 slot.removeEventListener('click', slotClickListener); 
@@ -920,8 +968,8 @@ function disableDraftMode() {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                updateRadar(myRadarChart2, slot.dataset.hero, true);
-                updateBar(myChart, slot.dataset.hero, 1, true);
+                //updateRadar(myRadarChart2, slot.dataset.hero, true);
+                //updateBar(myChart, slot.dataset.hero, 1, true);
                 updateBar(mobileBar, slot.dataset.hero, 1, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                 slot.innerHTML = '';
@@ -951,8 +999,8 @@ function disableDraftMode() {
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
-                    updateRadar(myRadarChart2, slot.dataset.hero, true);
-                    updateBar(myChart, slot.dataset.hero, 0, true);
+                    //updateRadar(myRadarChart2, slot.dataset.hero, true);
+                    //updateBar(myChart, slot.dataset.hero, 0, true);
                     updateBar(mobileBar, slot.dataset.hero, 0, true);
                     updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                     slot.innerHTML = '';
@@ -960,8 +1008,8 @@ function disableDraftMode() {
                     slot.addEventListener('click', slotClickListener); 
                 });
                 disableHeroInGrid(selectedHero);
-                updateRadar(myRadarChart2, slot.dataset.hero, false);
-                updateBar(myChart, slot.dataset.hero, 0, false);
+                //updateRadar(myRadarChart2, slot.dataset.hero, false);
+                //updateBar(myChart, slot.dataset.hero, 0, false);
                 updateBar(mobileBar, slot.dataset.hero, 0, false);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
                 slot.removeEventListener('click', slotClickListener); 
@@ -977,8 +1025,8 @@ function disableDraftMode() {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                updateRadar(myRadarChart2, slot.dataset.hero, true);
-                updateBar(myChart, slot.dataset.hero, 0, true);
+                //updateRadar(myRadarChart2, slot.dataset.hero, true);
+                //updateBar(myChart, slot.dataset.hero, 0, true);
                 updateBar(mobileBar, slot.dataset.hero, 0, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                 slot.innerHTML = '';
