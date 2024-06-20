@@ -149,10 +149,10 @@ const searchInput2 = document.getElementById('search2');
 const blueTeamIndicator = document.getElementById('blueTeamIndicator');
 const redTeamIndicator = document.getElementById('redTeamIndicator');
 
-// searchInput.addEventListener('input', (event) => {
-//     const query = event.target.value.toLowerCase();
-//     filterHeroes(query);
-// });
+searchInput.addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    filterHeroes(query);
+});
 
 searchInput2.addEventListener('input', (event) => {
     const query = event.target.value.toLowerCase();
@@ -463,45 +463,45 @@ function updateMobileRadar(chart, heroName, team, mode){
     chart.update();
 }
 
-// const loadHeroes = (category) => {
-//     const heroesToDisplay = category === 'all' ? heroes : heroes.filter(hero => hero.categories.includes(category));
-//     displayHeroes(heroesToDisplay);
-// };
+const loadHeroes = (category) => {
+     const heroesToDisplay = category === 'all' ? heroes : heroes.filter(hero => hero.categories.includes(category));
+     displayHeroes(heroesToDisplay);
+};
 
 const loadHeroes2 = (category) => {
     const heroesToDisplay = heroes.filter(hero => hero.categories.includes(category));
     displayHeroes2(heroesToDisplay);
 };
 
-// const filterHeroes = (query) => {
-//     const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query));
-//     displayHeroes(filteredHeroes);
-// };
+const filterHeroes = (query) => {
+    const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query));
+    displayHeroes(filteredHeroes);
+};
 
 const trueFilter = (query, category) => {
     const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query) && hero.categories.includes(category));
     displayHeroes2(filteredHeroes);
 }
 
-// const displayHeroes = (heroesToDisplay) => {
-//     heroGrid.innerHTML = '';
-//     heroesToDisplay.forEach(hero => {
-//         const heroDiv = document.createElement('div');
-//         heroDiv.classList.add('hero');
-//         heroDiv.dataset.hero = hero.name;
-//         heroDiv.dataset.categories = hero.categories.join(',');
+const displayHeroes = (heroesToDisplay) => {
+    heroGrid.innerHTML = '';
+    heroesToDisplay.forEach(hero => {
+        const heroDiv = document.createElement('div');
+        heroDiv.classList.add('hero');
+        heroDiv.dataset.hero = hero.name;
+        heroDiv.dataset.categories = hero.categories.join(',');
 
-//         if (hero.selected === true) {
-//             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
-//         } else {
-//             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
-//             heroDiv.addEventListener('click', () => {
-//                 selectedHero = hero;
-//             });
-//         }
-//         heroGrid.appendChild(heroDiv);
-//     });
-// };
+        if (hero.selected === true) {
+            heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
+        } else {
+            heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
+            heroDiv.addEventListener('click', () => {
+                selectedHero = hero;
+            });
+        }
+        heroGrid.appendChild(heroDiv);
+    });
+};
 
 const displayHeroes2 = (heroesToDisplay) => {
     heroGrid2.innerHTML = '';
@@ -604,13 +604,13 @@ if(screen.width<=820){
     globalCat = 'mage';
 }
 else{
-    //loadHeroes('all');
+    loadHeroes('all');
     globalCat = 'all';
 }
 
 categories.forEach(button => {
     button.addEventListener('click', () => {
-        //loadHeroes(button.dataset.category);
+        loadHeroes(button.dataset.category);
         loadHeroes2(button.dataset.category);
         globalCat = button.dataset.category;
     });
@@ -677,15 +677,6 @@ function resetDivs(team) {
         }
     });
 }
-
-document.getElementById('expandButton').addEventListener('click', function() {
-    const specificDiv = document.querySelectorAll('.large-div2')[1]; // Change the index as needed
-    expandDiv(specificDiv, 0);
-});
-
-document.getElementById('resetButton').addEventListener('click', function() {
-    resetDivs(0);
-});
 
 pickSlots1.forEach(slot => {
     const slotClickListener = () => {
