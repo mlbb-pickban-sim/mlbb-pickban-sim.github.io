@@ -135,6 +135,7 @@ body {
     background-color: #333;
     border-radius: 0.125rem;
     position: relative;
+    overflow: hidden;
 }
 
 .small-div img{
@@ -142,12 +143,21 @@ body {
     height:100%;
     object-fit: fill;
     overflow: hidden;
-    opacity: 40%;
+    opacity:80%;
     border-radius: 0.125rem;
 }
 
 .ban-indicator { 
-    position: absolute;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 4vw;
+    height: 4vw;
+    background-color: transparent;
+    border-right: 1px solid whitesmoke;
+    transform: rotate(-45deg);
+    right: 1.4vw;
+    bottom: 2.75vw;
 }
 
 .top-row{
