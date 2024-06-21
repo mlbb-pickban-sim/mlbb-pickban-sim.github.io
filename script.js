@@ -535,10 +535,10 @@ const displayHeroes = (heroesToDisplay) => {
                                                 <div class="ban-indicator"></div>`;
                     } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
                         targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
-                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="pick-slot-text">${selectedHero.name}</div>`;
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</div>`;
                         updateMobileRadar(myRadarChart, selectedHero.name, 0, false);
                         updateBar(myChart, selectedHero.name, 0, false);
-                        updateBar(mobileBar, selectedHero.name, 0, false);
+                        updateBar(mobileBar, selectedHero.name, 0, false); 
                         updateMobileRadar(mobileChart, selectedHero.name, 0, false);
                         resetDivs(0);
                     } else {
@@ -765,7 +765,7 @@ pickSlots1.forEach(slot => {
                 <span class="remove">✕</span>`;
             else
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
-                <span class="pick-slot-text">${selectedHero.name}</span>
+                <span class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</span>
                 <span class="remove">✕</span>`;
             var img = slot.querySelector('img');
             img.onload = function() {
@@ -959,19 +959,30 @@ function updateDots() {
 let inDraft = false;
 let currentHeroIndex = 0;
 const playButton = document.getElementById('playButton');
+const draftButton = document.getElementById('draft-button');
 const icon = document.getElementById('icon');
 
 const draftModeEnableClick = () => {
-    icon.classList.remove('play-icon');
-    icon.classList.add('pause-icon');
+    if(screen.width<=820){
+        icon.classList.remove('play-icon');
+        icon.classList.add('pause-icon');
+    }
     enableDraftMode();
 }
 
 playButton.addEventListener('click', draftModeEnableClick);
+draftButton.addEventListener('click', draftModeEnableClick);
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        disableDraftMode();
+    }
+});
 
 const draftModeDisableClick = () => {
-    icon.classList.add('play-icon');
-    icon.classList.remove('pause-icon');
+    if(screen.width<=820){
+        icon.classList.add('play-icon');
+        icon.classList.remove('pause-icon');
+    }
     disableDraftMode();
 }
 
@@ -994,7 +1005,7 @@ function disableDraftMode() {
                 else
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                     <span class="pick-slot-text">${selectedHero.name}</span>
-                        <span class="remove">✕</span>`;
+                    <span class="remove">✕</span>`;
                 var img = slot.querySelector('img');
                 img.onload = function() {
                     img.classList.add('animate');
@@ -1021,7 +1032,6 @@ function disableDraftMode() {
         };
         
         if (slot.dataset.hero != null) {
-            const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
             var span = document.createElement('span');
             span.className = 'remove';
             span.innerHTML = '✕';
@@ -1035,7 +1045,7 @@ function disableDraftMode() {
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                 slot.innerHTML = '';
                 slot.removeAttribute('data-hero');
-                slot.addEventListener('click', slotClickListener); // Re-attach the click listener
+                slot.addEventListener('click', slotClickListener); 
             });
         }
         else {
@@ -1053,7 +1063,7 @@ function disableDraftMode() {
                     <span class="remove">✕</span>`;
                 else
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
-                    <span class="pick-slot-text">${selectedHero.name}</span>
+                    <span class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</span>
                         <span class="remove">✕</span>`;
                 var img = slot.querySelector('img');
                 img.onload = function() {
@@ -1081,7 +1091,6 @@ function disableDraftMode() {
         };
         
         if (slot.dataset.hero != null) {
-            const foundHero = heroes.find(hero => hero.name === slot.dataset.hero);
             var span = document.createElement('span');
             span.className = 'remove';
             span.innerHTML = '✕';
@@ -1168,6 +1177,19 @@ function enableDraftMode() {
     else
         smallDivs[0].classList.add('glow-blue-small');
 
+    mobileBar.data.datasets[0].data = [0,0,0,0,0,0,0];
+    mobileBar.data.datasets[1].data = [0,0,0,0,0,0,0];
+    mobileChart.data.datasets[0].data = [0,0,0,0,0,0];
+    mobileChart.data.datasets[1].data = [0,0,0,0,0,0];
+    myRadarChart.data.datasets[0].data = [0,0,0,0,0,0];
+    myRadarChart.data.datasets[1].data = [0,0,0,0,0,0];
+    myChart.data.datasets[0].data = [0,0,0,0,0,0,0];
+    myChart.data.datasets[1].data = [0,0,0,0,0,0,0];
+
+    mobileChart.update();
+    mobileBar.update();
+    myChart.update();
+    myRadarChart.update();
 
     banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
     pickSlots1.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
@@ -1177,14 +1199,17 @@ function enableDraftMode() {
         hero.selected = false;
     });
 
+    loadHeroes(globalCat);
     loadHeroes2(globalCat);
 
     inDraft = true;
     playButton.removeEventListener('click', draftModeEnableClick);
     playButton.addEventListener('click', draftModeDisableClick);
+    draftButton.style.visibility = 'hidden';
 
     if(screen.width<=820)
         showNotification('Draft Mode Enabled');
+
     blueTeamIndicator.style.visibility = 'visible';
     redTeamIndicator.style.visibility = 'hidden';
     showTimer();
@@ -1265,6 +1290,10 @@ function hideTimer(){
     if(countdownText)
         countdownText.style.visibility = 'hidden'; 
     clearInterval(timerInterval);
+    if(draftButton)
+        draftButton.style.visibility= 'visible';
+        resetDivs(1);
+        resetDivs(0);
 }
 //enableDraftMode();
 });
