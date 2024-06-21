@@ -782,6 +782,7 @@ body {
         border-radius: 2px;
         overflow: hidden;
         border: 0px;
+        transition: none;
     }
     .large-div2 img{
         width:100%;
@@ -875,6 +876,7 @@ body {
         overflow: hidden;
         position: relative;
         border: 0px;
+        transition: none;
     }
     
     .large-div img{
@@ -1048,4 +1050,3 @@ body {
         -webkit-overflow-scrolling: touch; 
     }
 }
-

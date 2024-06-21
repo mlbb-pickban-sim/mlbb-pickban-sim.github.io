@@ -760,14 +760,16 @@ function resetDivs(team) {
 pickSlots1.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
-            if(screen.width <= 820)
+            if(screen.width <= 820){
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                 <span class="remove">✕</span>`;
-            else
+            }
+            else{
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                 <div class="gradient-overlay"></div>
                 <span class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</span>
                 <span class="remove">✕</span>`;
+            }
             var img = slot.querySelector('img');
             img.onload = function() {
                 img.classList.add('animate');
@@ -799,14 +801,16 @@ pickSlots1.forEach(slot => {
 pickSlots2.forEach(slot => {
     const slotClickListener = () => {
         if (selectedHero) {
-            if(screen.width <= 820)
+            if(screen.width <= 820){
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                 <span class="remove">✕</span>`;
-            else
+            }
+            else{
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                 <div class="gradient-overlay"></div>
                 <span class="pick-slot-text">${selectedHero.name}</span>
                 <span class="remove">✕</span>`;
+            }
             var img = slot.querySelector('img');
             img.onload = function() {
                 img.classList.add('animate');
@@ -1001,14 +1005,16 @@ function disableDraftMode() {
     pickSlots2.forEach(slot => {
         const slotClickListener = () => {
             if (selectedHero) {
-                if(screen.width <= 820)
+                if(screen.width <= 820){
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                     <span class="remove">✕</span>`;
-                else
+                }   
+                else{
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                     <div class="gradient-overlay"></div>
                     <span class="pick-slot-text">${selectedHero.name}</span>
                     <span class="remove">✕</span>`;
+                }
                 var img = slot.querySelector('img');
                 img.onload = function() {
                     img.classList.add('animate');
@@ -1061,14 +1067,16 @@ function disableDraftMode() {
     pickSlots1.forEach(slot => {
         const slotClickListener = () => {
             if (selectedHero) {
-                if(screen.width <= 820)
+                if(screen.width <= 820){
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">
                     <span class="remove">✕</span>`;
-                else
+                }
+                    else{
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                     <span class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</span>
                     <div class="gradient-overlay"></div>
                     <span class="remove">✕</span>`;
+                }
                 var img = slot.querySelector('img');
                 img.onload = function() {
                     img.classList.add('animate');
@@ -1294,10 +1302,10 @@ function hideTimer(){
     if(countdownText)
         countdownText.style.visibility = 'hidden'; 
     clearInterval(timerInterval);
-    if(draftButton)
-        draftButton.style.visibility= 'visible';
+    draftButton.style.visibility= 'visible';
+    if(screen.width>820){
         resetDivs(1);
         resetDivs(0);
+    }
 }
-//enableDraftMode();
 });
