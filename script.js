@@ -535,7 +535,7 @@ const displayHeroes = (heroesToDisplay) => {
                                                 <div class="ban-indicator"></div>`;
                     } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
                         targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
-                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</div>`;
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="gradient-overlay"></div><div class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</div>`;
                         updateMobileRadar(myRadarChart, selectedHero.name, 0, false);
                         updateBar(myChart, selectedHero.name, 0, false);
                         updateBar(mobileBar, selectedHero.name, 0, false); 
@@ -543,7 +543,7 @@ const displayHeroes = (heroesToDisplay) => {
                         resetDivs(0);
                     } else {
                         targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
-                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="pick-slot-text">${selectedHero.name}</div>`;
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="gradient-overlay"></div><div class="pick-slot-text">${selectedHero.name}</div>`;
                         updateMobileRadar(myRadarChart, selectedHero.name, 1, false);
                         updateBar(myChart, selectedHero.name, 1, false);
                         updateBar(mobileBar, selectedHero.name, 1, false);
@@ -765,6 +765,7 @@ pickSlots1.forEach(slot => {
                 <span class="remove">✕</span>`;
             else
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                <div class="gradient-overlay"></div>
                 <span class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</span>
                 <span class="remove">✕</span>`;
             var img = slot.querySelector('img');
@@ -803,8 +804,9 @@ pickSlots2.forEach(slot => {
                 <span class="remove">✕</span>`;
             else
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                <div class="gradient-overlay"></div>
                 <span class="pick-slot-text">${selectedHero.name}</span>
-                    <span class="remove">✕</span>`;
+                <span class="remove">✕</span>`;
             var img = slot.querySelector('img');
             img.onload = function() {
                 img.classList.add('animate');
@@ -1004,6 +1006,7 @@ function disableDraftMode() {
                     <span class="remove">✕</span>`;
                 else
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
+                    <div class="gradient-overlay"></div>
                     <span class="pick-slot-text">${selectedHero.name}</span>
                     <span class="remove">✕</span>`;
                 var img = slot.querySelector('img');
@@ -1064,7 +1067,8 @@ function disableDraftMode() {
                 else
                     slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                     <span class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</span>
-                        <span class="remove">✕</span>`;
+                    <div class="gradient-overlay"></div>
+                    <span class="remove">✕</span>`;
                 var img = slot.querySelector('img');
                 img.onload = function() {
                     img.classList.add('animate');
