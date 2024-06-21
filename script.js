@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 window.scrollTo(1, 0);
-
+let currentHeroIndex = 0;
 
 const heroes = [
     { name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', splash:'src/miya4.webp',selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
@@ -963,7 +963,6 @@ function updateDots() {
 }
 
 let inDraft = false;
-let currentHeroIndex = 0;
 const playButton = document.getElementById('playButton');
 const draftButton = document.getElementById('draft-button');
 const icon = document.getElementById('icon');
@@ -1224,7 +1223,10 @@ function enableDraftMode() {
 
     blueTeamIndicator.style.visibility = 'visible';
     redTeamIndicator.style.visibility = 'hidden';
-    showTimer();
+    timerContainer.style.visibility = 'visible';
+    if(countdownText)
+        countdownText.style.visibility = 'visible'; 
+    startTimer(); 
 }
     
 function showNotification(message) {
@@ -1258,20 +1260,22 @@ else{
     countdownText = document.getElementById('countdown-text');
 }
 
-let totalTime = 30; 
+let totalTime = 5; 
 let currentTime = totalTime;
 const updateInterval = 10; 
 const initialWidth = 100; 
 let timerInterval;
 
-function updateCountdown() {
+function updateCountdown(callback) {
     if (currentTime <= 0) {
         clearInterval(timerInterval);
         currentTime = 0;
         countdownBar.style.width = '0%'; 
         if(countdownText)
             countdownText.textContent = '0'; 
-        return;
+        if(callback){
+            callback();
+        }
     }
 
     currentTime -= updateInterval / 1000; 
@@ -1282,19 +1286,65 @@ function updateCountdown() {
 }
 
 function startTimer() {
+    let targetDiv;
+    defaultCallback = () => {
+        console.log(1)
+        if (currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4 || currentHeroIndex == 13) {
+            blueTeamIndicator.style.visibility = 'hidden';
+            redTeamIndicator.style.visibility = 'visible';
+            targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex+1]];
+            if (targetDiv) targetDiv.classList.add('glow-red-small');
+            targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
+            if (targetDiv) {
+                targetDiv.classList.remove('glow-blue-small');
+                targetDiv.classList.remove('glow-red-small');
+            }
+            currentHeroIndex++;
+            startTimer();
+        } else if (currentHeroIndex == 1 || currentHeroIndex == 3 || currentHeroIndex == 12 || currentHeroIndex == 14) {
+            blueTeamIndicator.style.visibility = 'visible';
+            redTeamIndicator.style.visibility = 'hidden';
+            targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex+1]];
+            if (targetDiv) targetDiv.classList.add('glow-blue-small');
+            targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
+            if (targetDiv) {
+                targetDiv.classList.remove('glow-blue-small');
+                targetDiv.classList.remove('glow-red-small');
+            }
+            currentHeroIndex++;
+            startTimer();
+        } else if (currentHeroIndex == 5) {
+            blueTeamIndicator.style.visibility = 'visible';
+            redTeamIndicator.style.visibility = 'hidden';
+            targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex+1]];
+            if (targetDiv) targetDiv.classList.add('glow-blue');
+            targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
+            if (targetDiv) {
+                targetDiv.classList.remove('glow-blue-small');
+                targetDiv.classList.remove('glow-red-small');
+            }
+            currentHeroIndex++;
+            startTimer();
+        } else if (currentHeroIndex == 15) {
+            blueTeamIndicator.style.visibility = 'hidden';
+            redTeamIndicator.style.visibility = 'visible';
+            targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex+1]];
+            if (targetDiv) targetDiv.classList.add('glow-red');
+            targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
+            if (targetDiv) {
+                targetDiv.classList.remove('glow-blue-small');
+                targetDiv.classList.remove('glow-red-small');
+            }
+            currentHeroIndex++;
+            startTimer();
+        } 
+    };
     currentTime = totalTime;
     countdownBar.style.width = initialWidth + '%'; 
     if(countdownText)
         countdownText.textContent = totalTime; 
     clearInterval(timerInterval); 
-    timerInterval = setInterval(updateCountdown, updateInterval); 
-}
-
-function showTimer() {
-    timerContainer.style.visibility = 'visible';
-    if(countdownText)
-        countdownText.style.visibility = 'visible'; 
-    startTimer(); 
+    timerInterval = setInterval(() => updateCountdown(defaultCallback), updateInterval); 
 }
 
 function hideTimer(){

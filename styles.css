@@ -486,7 +486,7 @@ body {
     height:80%;
     align-self: center;
     width: 10%;
-    visibility: visible;
+    visibility: hidden;
 }
 
 .triangle-right {
@@ -496,7 +496,7 @@ body {
     border-top: 0.5vw solid transparent;
     border-bottom: 0.5vw solid transparent;
     border-left: 0.5vw solid white;
-    visibility: visible;
+    visibility: hidden;
 }
 
 .triangle-left {
@@ -506,7 +506,7 @@ body {
     border-top: 0.5vw solid transparent;
     border-bottom: 0.5vw solid transparent;
     border-right: 0.5vw solid white;
-    visibility: visible;
+    visibility: hidden;
 }
 
 .remove {
