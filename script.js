@@ -1260,7 +1260,7 @@ else{
     countdownText = document.getElementById('countdown-text');
 }
 
-let totalTime = 5; 
+let totalTime = 30; 
 let currentTime = totalTime;
 const updateInterval = 10; 
 const initialWidth = 100; 
