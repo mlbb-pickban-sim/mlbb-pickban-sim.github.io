@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.scrollTo(1, 0);
 
-//const ctx = document.getElementById('myChart').getContext('2d');
 
 const heroes = [
     { name: 'Miya', categories: ['marksman'], img: 'src/miya.webp', bigimg: 'src/miya2.webp', smlimg: 'src/miya3.png', splash:'src/miya4.webp',selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  },
@@ -136,11 +135,17 @@ heroes.forEach(function (element){
     element.splash = "src/"+element.name.toLowerCase()+"4.webp";
 })
 
-console.log(heroes[2])
-
-const heroOrder = [
-    10, 15, 11, 16, 12, 17, 5, 5, 6, 6, 7, 7, 18, 13, 19, 14, 8, 8, 9, 9
-];
+let heroOrder;
+if(screen.width<=820){
+    heroOrder = [
+        10, 15, 11, 16, 12, 17, 5, 5, 6, 6, 7, 7, 18, 13, 19, 14, 8, 8, 9, 9
+    ];
+}
+else{
+    heroOrder = [
+        0, 5, 1, 6, 2, 7, 0, 0, 1, 1, 2, 2, 8, 3, 9, 4, 3, 3, 4, 4
+    ];
+}
 
 const heroGrid = document.querySelector('.hero-grid');
 const heroGrid2 = document.querySelector('.hero-grid2');
@@ -153,8 +158,16 @@ let selectedHero = null;
 
 const searchInput = document.getElementById('search');
 const searchInput2 = document.getElementById('search2');
-const blueTeamIndicator = document.getElementById('blueTeamIndicator');
-const redTeamIndicator = document.getElementById('redTeamIndicator');
+let blueTeamIndicator;
+let redTeamIndicator;
+if(screen.width<=820){
+    blueTeamIndicator = document.getElementById('blueTeamIndicator');
+    redTeamIndicator = document.getElementById('redTeamIndicator');
+}
+else{
+    blueTeamIndicator = document.getElementById('blueTeamIndicator2');
+    redTeamIndicator = document.getElementById('redTeamIndicator2');
+}
 
 searchInput.addEventListener('input', (event) => {
     const query = event.target.value.toLowerCase();
@@ -167,6 +180,8 @@ searchInput2.addEventListener('input', (event) => {
 });
 
 const ctx10 = document.getElementById('mobileBar').getContext('2d');
+const ctx = document.getElementById('myChart').getContext('2d');
+
 const mobileBar = new Chart(ctx10, {
     type: 'bar',
     data: {
@@ -228,159 +243,133 @@ const mobileBar = new Chart(ctx10, {
         barPercentage: 0.3,
     },
 });
-// const myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
-//         datasets: [
-//             {
-//                 label: 'Blue Side',
-//                 data:  [0,0,0,0,0,0,0], // Negative values
-//                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
-//                 borderColor: 'rgba(54, 162, 235, 1)',
-//                 borderWidth: 1
-//             },
-//             {
-//                 label: 'Red Side',
-//                 data:  [0,0,0,0,0,0,0], // Positive values
-//                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
-//                 borderColor: 'rgba(255, 99, 132, 1)',
-//                 borderWidth: 1
-//             }
-//         ]
-//     },
-//     options: {
-//         indexAxis: 'y',
-//         scales: {
-//             x: {
-//                 beginAtZero: true,
-//                 min: -10,
-//                 max: 10,
-//                 ticks: {
-//                     callback: function(value) {
-//                         return Math.abs(value);
-//                     }
-//                 }
-//             },
-//             y: {
-//                 stacked: true
-//             }
-//         },
-//         plugins: {
-//             legend: {
-//                 display: false
-//             },
-//             tooltip: {
-//                 callbacks: {
-//                     label: function(context) {
-//                         let label = context.dataset.label || '';
-//                         if (label) {
-//                             label += ': ';
-//                         }
-//                         label += Math.abs(context.raw);
-//                         return label;
-//                     }
-//                 }
-//             }
-//         },
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         categoryPercentage: 1.0,
-//         barPercentage: 1.0
-//     },
-// });
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Wave Clear', 'Hero DPS', 'Vision and Info', 'Crowd Control', 'Objective', 'Push', 'Support Utility'],
+        datasets: [
+            {
+                label: 'Blue Side',
+                data:  [0,0,0,0,0,0,0], // Negative values
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Red Side',
+                data:  [0,0,0,0,0,0,0], // Positive values
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        scales: {
+            x: {
+                grid:{
+                color: "#424242",
+                },
+                beginAtZero: true,
+                min: -10,
+                max: 10,
+                ticks: {
+                    callback: function(value) {
+                        return Math.abs(value);
+                    }
+                }
+            },
+            y: {
+                grid:{
+                color: "#424242",
+                },
+                stacked: true
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += Math.abs(context.raw);
+                        return label;
+                    }
+                }
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        categoryPercentage: 1.0,
+        barPercentage: 0.5,
+    },
+});
 
-// const ctx2 = document.getElementById('myRadarChart2').getContext('2d');
-// const myRadarChart2 = new Chart(ctx2, {
-//     type: 'radar',
-//     data: {
-//         labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
-//         datasets: [{
-//             label: 'Red Team',
-//             data: [0,0,0,0,0,0], // Update these values with your data
-//             fill: true,
-//             backgroundColor: 'rgba(255, 99, 132, 0.2)',
-//             borderColor: 'rgba(255, 99, 132, 1)',
-//             pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-//             pointBorderColor: '#fff',
-//             pointHoverBackgroundColor: '#fff',
-//             pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
-//         }]
-//     },
-//     options: {
-//         responsive: true,
-//         animation: {
-//             duration: 500
-//         },
-//         scales: {
-//             r: {
-//                 min: 0,
-//                 max: 10,
-//                 ticks: {
-//                     beginAtZero: true,
-//                     stepSize: 1,
-//                     display: false,
-//                 },
-//                 angleLines: {
-//                     display: true,
-//                     color: 'gray'
-//                 },
-//                 grid: {
-//                     color: 'gray' 
-//                 },
-//                 pointLabels: {
-//                     color: 'gray',
-//                 }
-//             }
-//         }
-//     }   
-// });
-
-// const ctx3 = document.getElementById('myRadarChart1').getContext('2d');
-// const myRadarChart1 = new Chart(ctx3, {
-//     type: 'radar',
-//     data: {
-//         labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
-//         datasets: [{
-//             label: 'Blue Team',
-//             data: [0,0,0,0,0,0], // Update these values with your data
-//             fill: true,
-//             backgroundColor: 'rgba(54, 162, 235, 0.2)',
-//             borderColor: 'rgba(54, 162, 235, 1)',
-//             pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-//             pointBorderColor: '#fff',
-//             pointHoverBackgroundColor: '#fff',
-//             pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
-//         }]
-//     },
-//     options: {
-//         responsive: true,
-//         animation: {
-//             duration: 500
-//         },
-//         scales: {
-//             r: {
-//                 min: 0,
-//                 max: 10,
-//                 ticks: {
-//                     beginAtZero: true,
-//                     stepSize: 1,
-//                     display: false,
-//                 },
-//                 angleLines: {
-//                     display: true,
-//                     color: 'gray' 
-//                 },
-//                 grid: {
-//                     color: 'gray' 
-//                 },
-//                 pointLabels: {
-//                     color: 'gray' 
-//                 }
-//             }
-//         }
-//     }   
-// });
+const ctx2 = document.getElementById('myRadarChart').getContext('2d');
+const myRadarChart = new Chart(ctx2,{
+    type: 'radar',
+    data: {
+        labels: ['Team Fight', 'Early-to-mid', 'DOT/Sustain', 'ISO', 'Late Game', 'Burst'],
+        datasets: [
+            {
+                label: 'Blue Team',
+                data: [0, 0, 0, 0, 0, 0], // Update these values with your data
+                fill: true,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+            },
+            {
+                label: 'Red Team',
+                data: [0, 0, 0, 0, 0, 0], // Update these values with your data
+                fill: true,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio:false,
+        animation: {
+            duration: 500
+        },
+        scales: {
+            r: {
+                min: 0,
+                max: 10,
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1,
+                    display: false
+                },
+                angleLines: {
+                    display: true,
+                    color: 'gray'
+                },
+                grid: {
+                    color: 'gray'
+                },
+                pointLabels: {
+                    color: 'gray'
+                }
+            }
+        }
+    }
+});
 
 const ctx4 = document.getElementById('mobileRadar1').getContext('2d');
 const mobileChart = new Chart(ctx4,{
@@ -502,13 +491,96 @@ const displayHeroes = (heroesToDisplay) => {
         heroDiv.classList.add('hero');
         heroDiv.dataset.hero = hero.name;
         heroDiv.dataset.categories = hero.categories.join(',');
-
         if (hero.selected === true) {
             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
         } else {
             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
             heroDiv.addEventListener('click', () => {
                 selectedHero = hero;
+                if(inDraft){
+                    let targetDiv;
+                    startTimer();
+                    if(currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4 || currentHeroIndex == 6 ||  currentHeroIndex == 7 ||currentHeroIndex == 10 || currentHeroIndex == 11 || currentHeroIndex == 13 || currentHeroIndex == 15|| currentHeroIndex == 18){
+                        blueTeamIndicator.style.visibility = 'hidden';
+                        redTeamIndicator.style.visibility = 'visible';
+                    }
+                    else{
+                        blueTeamIndicator.style.visibility = 'visible';
+                        redTeamIndicator.style.visibility = 'hidden';
+                    }
+
+                    if (currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4||currentHeroIndex == 11|| currentHeroIndex == 13) {
+                        targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv)
+                            targetDiv.classList.add('glow-red-small');
+                    } else if(currentHeroIndex == 1 || currentHeroIndex == 3 || currentHeroIndex == 12||currentHeroIndex == 14){
+                        targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv)
+                            targetDiv.classList.add('glow-blue-small');
+                    } else if(currentHeroIndex == 5 || currentHeroIndex == 8 || currentHeroIndex == 9 || currentHeroIndex == 16||currentHeroIndex == 17){
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv){
+                            targetDiv.classList.add('glow-blue');
+                        }
+                    } else{
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv){
+                            targetDiv.classList.add('glow-red');
+                        }
+                    }
+
+                    if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
+                        targetDiv = document.querySelectorAll('.small-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.smlimg}" alt="${selectedHero.name}">
+                                                <div class="ban-indicator"></div>`;
+                    } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="pick-slot-text">${selectedHero.name}</div>`;
+                        updateMobileRadar(myRadarChart, selectedHero.name, 0, false);
+                        updateBar(myChart, selectedHero.name, 0, false);
+                        updateBar(mobileBar, selectedHero.name, 0, false);
+                        updateMobileRadar(mobileChart, selectedHero.name, 0, false);
+                        resetDivs(0);
+                    } else {
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="pick-slot-text">${selectedHero.name}</div>`;
+                        updateMobileRadar(myRadarChart, selectedHero.name, 1, false);
+                        updateBar(myChart, selectedHero.name, 1, false);
+                        updateBar(mobileBar, selectedHero.name, 1, false);
+                        updateMobileRadar(mobileChart, selectedHero.name, 1, false);
+                        resetDivs(1);
+                    }
+                    targetDiv.classList.remove('glow-blue');
+                    targetDiv.classList.remove('glow-red');
+                    targetDiv.classList.remove('glow-blue-small');
+                    targetDiv.classList.remove('glow-red-small');
+                    targetDiv.dataset.hero = selectedHero.name;
+
+                    if (currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4||currentHeroIndex == 11|| currentHeroIndex == 13) {
+                    } else if(currentHeroIndex == 1 || currentHeroIndex == 3 || currentHeroIndex == 12||currentHeroIndex == 14){
+                    } else if(currentHeroIndex == 5 || currentHeroIndex == 8 || currentHeroIndex == 9 || currentHeroIndex == 16||currentHeroIndex == 17){
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv){
+                            expandDiv(targetDiv,0);
+                        }
+                    } else{
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex+1]];
+                        if(targetDiv){
+                            expandDiv(targetDiv,1);
+                        }
+                    }
+                
+                disableHeroInGrid(selectedHero);
+                currentHeroIndex++;
+                if (currentHeroIndex >= heroOrder.length){ 
+                    hideTimer();
+                    inDraft = false;
+                    redTeamIndicator.style.visibility = 'hidden';
+                    blueTeamIndicator.style.visibility = 'hidden';
+                    disableDraftMode();
+                    return;
+                }
+            }
             });
         }
         heroGrid.appendChild(heroDiv);
@@ -532,15 +604,6 @@ const displayHeroes2 = (heroesToDisplay) => {
                 if(inDraft){
                     let targetDiv;
                     startTimer();
-                    if(currentHeroIndex == 5){
-                        showNotification("Pick Phase 1")
-                    }
-                    if(currentHeroIndex == 11){
-                        showNotification("Ban Phase 2")
-                    }
-                    if(currentHeroIndex == 15){
-                        showNotification("Pick Phase 2")
-                    }
                     if(currentHeroIndex == 0 || currentHeroIndex == 2 || currentHeroIndex == 4 || currentHeroIndex == 6 ||  currentHeroIndex == 7 ||currentHeroIndex == 10 || currentHeroIndex == 11 || currentHeroIndex == 13 || currentHeroIndex == 15|| currentHeroIndex == 18){
                         blueTeamIndicator.style.visibility = 'hidden';
                         redTeamIndicator.style.visibility = 'visible';
@@ -575,16 +638,15 @@ const displayHeroes2 = (heroesToDisplay) => {
                     } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
                         targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
-                        //updateRadar(myRadarChart1, selectedHero.name, false);
-                        //updateBar(myChart, selectedHero.name, 0, false);
+                        updateMobileRadar(myRadarChart, selectedHero.name, 0, false);
+                        updateBar(myChart, selectedHero.name, 0, false);
                         updateBar(mobileBar, selectedHero.name, 0, false);
                         updateMobileRadar(mobileChart, selectedHero.name, 0, false);
                     } else {
-                        
                         targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.bigimg}" alt="${selectedHero.name}">`;
-                        //updateRadar(myRadarChart2, selectedHero.name, false);
-                        //updateBar(myChart, selectedHero.name, 1, false);
+                        updateMobileRadar(myRadarChart, selectedHero.name, 1, false);
+                        updateBar(myChart, selectedHero.name, 1, false);
                         updateBar(mobileBar, selectedHero.name, 1, false);
                         updateMobileRadar(mobileChart, selectedHero.name, 1, false);
                     }
@@ -666,18 +728,18 @@ function expandDiv(element, team) {
     }
     allDivs.forEach(div => {
         if(div != element){
-        div.style.height = '15.5vh';
         const pickSlotText = div.querySelector('.pick-slot-text');
-        if (pickSlotText) {
-            pickSlotText.style.top = '11vh';
-        }
+        setTimeout(() => {
+            div.style.height = '15.5vh';
+        }, 2000);
         }
     });
-    element.style.height = '28vh';
     const pickSlotText = element.querySelector('.pick-slot-text');
-    if (pickSlotText) {
-        pickSlotText.style.top = '23.5vh';
-    }
+
+    setTimeout(() => {
+        element.style.height = '28vh';
+    }, 2000);
+    
 }
 function resetDivs(team) {
     let allDivs
@@ -687,11 +749,11 @@ function resetDivs(team) {
         allDivs = document.querySelectorAll('.large-div2');
 
     allDivs.forEach(div => {
-        div.style.height = '18vh';
         const pickSlotText = div.querySelector('.pick-slot-text');
-        if (pickSlotText) {
-            pickSlotText.style.top = ''; // Reset to original value or specify a value if needed
-        }
+        setTimeout(() => {
+            div.style.height = '18vh';
+        }, 2000);
+        
     });
 }
 
@@ -704,7 +766,7 @@ pickSlots1.forEach(slot => {
             else
                 slot.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}">
                 <span class="pick-slot-text">${selectedHero.name}</span>
-                    <span class="remove">✕</span>`;
+                <span class="remove">✕</span>`;
             var img = slot.querySelector('img');
             img.onload = function() {
                 img.classList.add('animate');
@@ -713,8 +775,8 @@ pickSlots1.forEach(slot => {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                //updateRadar(myRadarChart1, slot.dataset.hero, true);
-                //updateBar(myChart, slot.dataset.hero, 0, true);
+                updateMobileRadar(myRadarChart, slot.dataset.hero, 0, true);
+                updateBar(myChart, slot.dataset.hero, 0, true);
                 updateBar(mobileBar, slot.dataset.hero, 0, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                 slot.innerHTML = '';
@@ -722,8 +784,8 @@ pickSlots1.forEach(slot => {
                 slot.addEventListener('click', slotClickListener); 
             });
             disableHeroInGrid(selectedHero);
-            //updateRadar(myRadarChart1, slot.dataset.hero, false);
-            //updateBar(myChart, slot.dataset.hero, 0, false);
+            updateMobileRadar(myRadarChart, slot.dataset.hero, 0, false);
+            updateBar(myChart, slot.dataset.hero, 0, false);
             updateBar(mobileBar, slot.dataset.hero, 0, false);
             updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
             slot.removeEventListener('click', slotClickListener); 
@@ -751,8 +813,8 @@ pickSlots2.forEach(slot => {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                //updateRadar(myRadarChart2, slot.dataset.hero, true);
-                //updateBar(myChart, slot.dataset.hero, 1, true);
+                updateMobileRadar(myRadarChart, slot.dataset.hero, 1, true);
+                updateBar(myChart, slot.dataset.hero, 1, true);
                 updateBar(mobileBar, slot.dataset.hero, 1, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                 slot.innerHTML = '';
@@ -760,8 +822,8 @@ pickSlots2.forEach(slot => {
                 slot.addEventListener('click', slotClickListener); // Re-attach the click listener
             });
             disableHeroInGrid(selectedHero);
-            //updateRadar(myRadarChart2, slot.dataset.hero, false);
-            //updateBar(myChart, slot.dataset.hero, 1, false);
+            updateMobileRadar(myRadarChart, slot.dataset.hero, 1, false);
+            updateBar(myChart, slot.dataset.hero, 1, false);
             updateBar(mobileBar, slot.dataset.hero, 1, false);
             updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
             slot.removeEventListener('click', slotClickListener); // Remove the click listener
@@ -812,23 +874,6 @@ function updateBar(chart, heroName, team, mode){
         } 
         chart.data.datasets[0].data = temp;
     }
-    chart.update();
-}
-
-function updateRadar(chart, heroName, mode){
-    const foundHero = heroes.find(hero => hero.name === heroName);
-    const extractedProperties = [foundHero.teamfight,foundHero.etm,foundHero.dot,foundHero.iso,foundHero.late,foundHero.burst];
-    temp = chart.data.datasets[0].data;
-
-    for (let i = 0; i < extractedProperties.length; i++) {
-        if (mode) {
-          temp[i] -= extractedProperties[i];
-        } else {
-          temp[i] += extractedProperties[i];
-        }
-    }
-    
-    chart.data.datasets[0].data = temp;
     chart.update();
 }
 
@@ -958,8 +1003,8 @@ function disableDraftMode() {
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
-                    //updateRadar(myRadarChart2, slot.dataset.hero, true);
-                    //updateBar(myChart, slot.dataset.hero, 1, true);
+                    updateMobileRadar(myRadarChart, slot.dataset.hero, 1, true);
+                    updateBar(myChart, slot.dataset.hero, 1, true);
                     updateBar(mobileBar, slot.dataset.hero, 1, true);
                     updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                     slot.innerHTML = '';
@@ -967,8 +1012,8 @@ function disableDraftMode() {
                     slot.addEventListener('click', slotClickListener); 
                 });
                 disableHeroInGrid(selectedHero);
-                //updateRadar(myRadarChart2, slot.dataset.hero, false);
-                //updateBar(myChart, slot.dataset.hero, 1, false);
+                updateMobileRadar(myRadarChart, slot.dataset.hero, 1, false);
+                updateBar(myChart, slot.dataset.hero, 1, false);
                 updateBar(mobileBar, slot.dataset.hero, 1, false);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, false);
                 slot.removeEventListener('click', slotClickListener); 
@@ -984,8 +1029,8 @@ function disableDraftMode() {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                //updateRadar(myRadarChart2, slot.dataset.hero, true);
-                //updateBar(myChart, slot.dataset.hero, 1, true);
+                updateMobileRadar(myRadarChart, slot.dataset.hero, 1, true);
+                updateBar(myChart, slot.dataset.hero, 1, true);
                 updateBar(mobileBar, slot.dataset.hero, 1, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 1, true);
                 slot.innerHTML = '';
@@ -1018,8 +1063,8 @@ function disableDraftMode() {
                 slot.querySelector('.remove').addEventListener('click', (e) => {
                     e.stopPropagation();
                     enableHeroInGrid(slot.dataset.hero);
-                    //updateRadar(myRadarChart2, slot.dataset.hero, true);
-                    //updateBar(myChart, slot.dataset.hero, 0, true);
+                    updateMobileRadar(myRadarChart, slot.dataset.hero, 0, true);
+                    updateBar(myChart, slot.dataset.hero, 0, true);
                     updateBar(mobileBar, slot.dataset.hero, 0, true);
                     updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                     slot.innerHTML = '';
@@ -1027,8 +1072,8 @@ function disableDraftMode() {
                     slot.addEventListener('click', slotClickListener); 
                 });
                 disableHeroInGrid(selectedHero);
-                //updateRadar(myRadarChart2, slot.dataset.hero, false);
-                //updateBar(myChart, slot.dataset.hero, 0, false);
+                updateMobileRadar(myRadarChart, slot.dataset.hero, 0, false);
+                updateBar(myChart, slot.dataset.hero, 0, false);
                 updateBar(mobileBar, slot.dataset.hero, 0, false);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, false);
                 slot.removeEventListener('click', slotClickListener); 
@@ -1044,8 +1089,8 @@ function disableDraftMode() {
             slot.querySelector('.remove').addEventListener('click', (e) => {
                 e.stopPropagation();
                 enableHeroInGrid(slot.dataset.hero);
-                //updateRadar(myRadarChart2, slot.dataset.hero, true);
-                //updateBar(myChart, slot.dataset.hero, 0, true);
+                updateMobileRadar(myRadarChart, slot.dataset.hero, 0, true);
+                updateBar(myChart, slot.dataset.hero, 0, true);
                 updateBar(mobileBar, slot.dataset.hero, 0, true);
                 updateMobileRadar(mobileChart, slot.dataset.hero, 0, true);
                 slot.innerHTML = '';
@@ -1105,14 +1150,12 @@ function disableDraftMode() {
         blueTeamIndicator.style.visibility = 'hidden';
     });
 }
-
 function enableDraftMode() {
     currentHeroIndex = 0;
     const largeDivs = document.querySelectorAll('.large-div');
     const largeDiv2s = document.querySelectorAll('.large-div2');
     const smallDivs = document.querySelectorAll('.small-div');
 
-    // Clear innerHTML
     largeDivs.forEach(div => div.innerHTML = '');
     largeDiv2s.forEach(div => div.innerHTML = '');
     smallDivs.forEach(div => div.innerHTML = '');
@@ -1120,10 +1163,12 @@ function enableDraftMode() {
     largeDivs.forEach(div => div.removeAttribute('data-hero'));
     largeDiv2s.forEach(div => div.removeAttribute('data-hero'));
     smallDivs.forEach(div => div.removeAttribute('data-hero'));
+    if(screen.width<=820)
+        smallDivs[10].classList.add('glow-blue-small');
+    else
+        smallDivs[0].classList.add('glow-blue-small');
 
-    smallDivs[10].classList.add('glow-blue-small');
 
-    // Remove click event listeners
     banSlots.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
     pickSlots1.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
     pickSlots2.forEach(slot => slot.replaceWith(slot.cloneNode(true)));
@@ -1138,12 +1183,13 @@ function enableDraftMode() {
     playButton.removeEventListener('click', draftModeEnableClick);
     playButton.addEventListener('click', draftModeDisableClick);
 
-    showNotification('Draft Mode Enabled');
+    if(screen.width<=820)
+        showNotification('Draft Mode Enabled');
     blueTeamIndicator.style.visibility = 'visible';
     redTeamIndicator.style.visibility = 'hidden';
     showTimer();
 }
-
+    
 function showNotification(message) {
     const notification = document.createElement('div');
     notification.classList.add('notification');
@@ -1162,9 +1208,19 @@ function showNotification(message) {
         }, 500); 
     }, 2500);
 }
+let countdownBar;
+let timerContainer;
+let countdownText = null;
+if(screen.width<=820){ 
+    countdownBar = document.getElementById('countdown-bar');
+    timerContainer = document.getElementById('timer-container');
+}
+else{
+    countdownBar = document.getElementById('countdown-bar2');
+    timerContainer = document.getElementById('timer-container2');
+    countdownText = document.getElementById('countdown-text');
+}
 
-const countdownBar = document.getElementById('countdown-bar');
-const timerContainer = document.getElementById('timer-container');
 let totalTime = 30; 
 let currentTime = totalTime;
 const updateInterval = 10; 
@@ -1176,28 +1232,39 @@ function updateCountdown() {
         clearInterval(timerInterval);
         currentTime = 0;
         countdownBar.style.width = '0%'; 
+        if(countdownText)
+            countdownText.textContent = '0'; 
         return;
     }
 
     currentTime -= updateInterval / 1000; 
     let widthPercentage = (currentTime / totalTime) * initialWidth;
     countdownBar.style.width = widthPercentage + '%';
+    if(countdownText)
+        countdownText.textContent = Math.ceil(currentTime); 
 }
 
 function startTimer() {
     currentTime = totalTime;
     countdownBar.style.width = initialWidth + '%'; 
+    if(countdownText)
+        countdownText.textContent = totalTime; 
     clearInterval(timerInterval); 
     timerInterval = setInterval(updateCountdown, updateInterval); 
 }
 
 function showTimer() {
-    timerContainer.style.visibility = 'visible'; 
+    timerContainer.style.visibility = 'visible';
+    if(countdownText)
+        countdownText.style.visibility = 'visible'; 
     startTimer(); 
 }
 
 function hideTimer(){
-    timerContainer.style.visibility = 'hidden'; 
+    timerContainer.style.visibility = 'hidden';
+    if(countdownText)
+        countdownText.style.visibility = 'hidden'; 
     clearInterval(timerInterval);
 }
+//enableDraftMode();
 });

@@ -18,7 +18,7 @@
                 <div class="wrapper"><div class="large-div2"></div></div>
                 <div class="wrapper"><div class="large-div2"></div></div>                
                 <div class="wrapper"><div class="large-div2"></div></div>
-                <div class="wrapper"><div class="large-div2"></div></div>
+                <div class="wrapper"><div class="large-div2" style ="border-bottom: 0px;"></div></div>
                 <div class="ban-div">
                     <div class="wrapper"><div class="small-div"></div></div>
                     <div class="wrapper"><div class="small-div"></div></div>
@@ -45,14 +45,28 @@
                         </div>
                     </div>
                     <div class = "notepad-container">
-                        <div class = "notepad"></div>
+                        <div class="notepad-wrapper">
+                            <textarea class = "notepad" placeholder="Notes"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="center-mid">
-
+                    <div class="bar-chart">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div class="radar-chart">
+                        <canvas id="myRadarChart"></canvas>
+                    </div>
                 </div>
                 <div class="center-bot">
-
+                    <div class="timer-container2" id="timer-container2">
+                        <div id="countdown-bar2"></div>
+                    </div>
+                    <div class="timer">
+                        <div class="triangle-left" id="blueTeamIndicator2"></div>
+                        <div id="countdown-text">30</div>
+                        <div class="triangle-right" id="redTeamIndicator2"></div>
+                    </div>
                 </div>
             </div>
             <div class="team-div">
@@ -60,7 +74,7 @@
                 <div class="wrapper"><div class="large-div"></div></div>
                 <div class="wrapper"><div class="large-div"></div></div>
                 <div class="wrapper"><div class="large-div"></div></div>
-                <div class="wrapper"><div class="large-div"></div></div>
+                <div class="wrapper"><div class="large-div" style ="border-bottom: 0px;"></div></div>
                 <div class="ban-div2">
                     <div class="wrapper"><div class="small-div"></div></div>
                     <div class="wrapper"><div class="small-div"></div></div>
