@@ -126,6 +126,8 @@ body {
     width: 25vw;
     background: linear-gradient(to right, #333 97.5%, #36A2EB 2.5%);
     overflow: hidden;
+    border-bottom: 1px black solid;
+    box-sizing: border-box;
     transition: height 0.5s ease;
 }
 
@@ -148,6 +150,8 @@ body {
     width: 25vw;
     background: linear-gradient(to left, #333 97.5%, #FF6384 2.5%);
     overflow: hidden;
+    border-bottom: 1px black solid;
+    box-sizing: border-box;
     transition: height 0.5s ease;
 }
 
@@ -783,6 +787,7 @@ body {
         overflow: hidden;
         border: 0px;
         transition: none;
+        box-shadow: none;
     }
     .large-div2 img{
         width:100%;
@@ -876,6 +881,7 @@ body {
         overflow: hidden;
         position: relative;
         border: 0px;
+        box-shadow: none;
         transition: none;
     }
     
@@ -908,6 +914,7 @@ body {
         height: 20%;
     }
     .small-div{
+        box-shadow: none;
         margin: 0;
         padding: 0;
         width: 10vw;
