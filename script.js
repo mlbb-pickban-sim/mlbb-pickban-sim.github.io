@@ -64,7 +64,7 @@ const heroes = [
     { name: 'Martis', categories: ['fighter'], img: 'src/martis.webp', bigimg: 'src/martis2.webp', smlimg: 'src/martis3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Uranus', categories: ['tank'], img: 'src/uranus.webp', bigimg: 'src/uranus2.webp', smlimg: 'src/uranus3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Hanabi', categories: ['marksman'], img: 'src/hanabi.webp', bigimg: 'src/hanabi2.webp', smlimg: 'src/hanabi3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
-    { name: 'Chang\'e', categories: ['mage'], img: 'src/change.webp', bigimg: 'src/change2.webp', smlimg: 'src/change3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
+    { name: 'Chang\'e', categories: ['mage'], img: 'src/change.webp', bigimg: 'src/change2.webp', smlimg: 'src/change3.png', splash: "src/change4.webp", selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Kaja', categories: ['support', 'fighter'], img: 'src/kaja.webp', bigimg: 'src/kaja2.webp', smlimg: 'src/kaja3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Selena', categories: ['assassin', 'mage'], img: 'src/selena.webp', bigimg: 'src/selena2.webp', smlimg: 'src/selena3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Aldous', categories: ['fighter'], img: 'src/aldous.webp', bigimg: 'src/aldous2.webp', smlimg: 'src/aldous3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
@@ -132,7 +132,8 @@ const heroes = [
 ];
 
 heroes.forEach(function (element){
-    element.splash = "src/"+element.name.toLowerCase()+"4.webp";
+    if(element.name != "Chang\'e")
+        element.splash = "src/"+element.name.toLowerCase()+"4.webp";
 })
 
 let heroOrder;
