@@ -495,6 +495,41 @@ const displayHeroes = (heroesToDisplay) => {
             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="-webkit-filter: grayscale(1);">`;
         } else {
             heroDiv.innerHTML = `<img title="${hero.name}" src="${hero.img}" alt="${hero.name}" style="cursor: pointer;">`;
+            heroDiv.addEventListener('mouseover', () =>{
+                if(inDraft){
+                    let targetDiv;
+                    if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
+                        return;
+                    } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
+                        targetDiv.style.backgroundImage = "url('" + hero.splash + "')";
+                        targetDiv.style.backgroundSize = "cover";
+                        targetDiv.style.backgroundPosition = "top";
+                        targetDiv.style.backgroundRepeat = "no-repeat";
+                    } else {
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.style.backgroundImage = "url('" + hero.splash + "')";
+                        targetDiv.style.backgroundSize = "cover";
+                        targetDiv.style.backgroundPosition = "top";
+                        targetDiv.style.backgroundRepeat = "no-repeat";
+                    }
+                }
+            });
+            heroDiv.addEventListener('mouseout', () =>{
+                if(inDraft){
+                    let targetDiv;
+                    if (currentHeroIndex < 6 || (currentHeroIndex >= 12 && currentHeroIndex < 16)) {
+                        return;
+                    } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
+                        targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
+                        targetDiv.style.backgroundImage = "";
+                    } else {
+                        targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.innerHTML = ``;
+                        targetDiv.style.backgroundImage = "";
+                    }
+                }
+            });
             heroDiv.addEventListener('click', () => {
                 selectedHero = hero;
                 if(inDraft){
@@ -582,6 +617,7 @@ const displayHeroes = (heroesToDisplay) => {
                 }
             }
             });
+            
         }
         heroGrid.appendChild(heroDiv);
     });
