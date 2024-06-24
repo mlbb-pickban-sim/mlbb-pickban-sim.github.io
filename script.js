@@ -571,6 +571,7 @@ const displayHeroes = (heroesToDisplay) => {
                                                 <div class="ban-indicator"></div>`;
                     } else if (currentHeroIndex == 6 || currentHeroIndex == 9 || currentHeroIndex == 10 || currentHeroIndex == 17 || currentHeroIndex == 18) {
                         targetDiv = document.querySelectorAll('.large-div2')[heroOrder[currentHeroIndex]];
+                        targetDiv.style.backgroundImage = "";
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="gradient-overlay"></div><div class="pick-slot-text" style="right: 1vw; left:auto;">${selectedHero.name}</div>`;
                         updateMobileRadar(myRadarChart, selectedHero.name, 0, false);
                         updateBar(myChart, selectedHero.name, 0, false);
@@ -579,6 +580,7 @@ const displayHeroes = (heroesToDisplay) => {
                         resetDivs(0);
                     } else {
                         targetDiv = document.querySelectorAll('.large-div')[heroOrder[currentHeroIndex]];
+                        targetDiv.style.backgroundImage = "";
                         targetDiv.innerHTML = `<img title="${selectedHero.name}" src="${selectedHero.splash}" alt="${selectedHero.name}"><div class="gradient-overlay"></div><div class="pick-slot-text">${selectedHero.name}</div>`;
                         updateMobileRadar(myRadarChart, selectedHero.name, 1, false);
                         updateBar(myChart, selectedHero.name, 1, false);
