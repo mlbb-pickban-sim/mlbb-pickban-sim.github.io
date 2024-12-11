@@ -124,7 +124,8 @@ var imgUrls = [
     'src/nolan.webp', 'src/nolan2.webp', 'src/nolan3.png', 'src/nolan4.webp',
     'src/cici.webp', 'src/cici2.webp', 'src/cici3.png', 'src/cici4.webp',
     'src/chip.webp', 'src/chip2.webp', 'src/chip3.png', 'src/chip4.webp',
-    'src/zhuxin.webp', 'src/zhuxin2.webp', 'src/zhuxin3.png', 'src/zhuxin4.webp'
+    'src/zhuxin.webp', 'src/zhuxin2.webp', 'src/zhuxin3.png', 'src/zhuxin4.webp',
+    'src/suyou.webp', 'src/suyou2.webp', 'src/suyou3.png', 'src/suyou4.webp'
 ];
 
 for (i=0;i<imgUrls.length;i++) {
