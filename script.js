@@ -128,7 +128,8 @@ const heroes = [
     { name: 'Nolan', categories: ['assassin'], img: 'src/nolan.webp', bigimg: 'src/nolan2.webp', smlimg: 'src/nolan3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Cici', categories: ['fighter'], img: 'src/cici.webp', bigimg: 'src/cici2.webp', smlimg: 'src/cici3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
     { name: 'Chip', categories: ['support', 'tank'], img: 'src/chip.webp', bigimg: 'src/chip2.webp', smlimg: 'src/chip3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
-    { name: 'Zhuxin', categories: ['mage'], img: 'src/zhuxin.webp', bigimg: 'src/zhuxin2.webp', smlimg: 'src/zhuxin3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 }
+    { name: 'Zhuxin', categories: ['mage'], img: 'src/zhuxin.webp', bigimg: 'src/zhuxin2.webp', smlimg: 'src/zhuxin3.png', selected:false , wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1 },
+    { name: 'Suyou', categories: ['assassin','fighter'], img: 'src/suoyu.webp', bigimg: 'src/suyou2.webp', smlimg: 'src/suyou3.png', selected:false, wave: 1, dps: 1, vision: 1, cc: 1, obj: 1, push: 1, supp: 1, teamfight: 1, etm: 1, dot: 1, iso: 1, late: 1, burst: 1  }
 ];
 
 heroes.forEach(function (element){
